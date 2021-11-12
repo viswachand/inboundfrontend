@@ -10,6 +10,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import CssBaseline from "@mui/material/CssBaseline";
+import Divider from '@mui/material/Divider';
 
 import { menu } from "../components/menu";
 import { hasChildren } from "../components/util";
@@ -17,7 +18,9 @@ import { hasChildren } from "../components/util";
 const useStyles = makeStyles((theme) => ({
   
   secondarytext: {
-    opacity: "0.6",
+   
+    backgroundColor:"#2F407B",
+    
   },
   icons: {
     color: "",
@@ -51,7 +54,9 @@ const SingleLevel = ({ item }) => {
     >
       <ListItemIcon style={{color:"rgb(238, 238, 238)", opacity:"0.5", minWidth:"39px"}}>{item.icon}</ListItemIcon>
       <ListItemText primary={item.title} />
+      <Divider />
     </ListItem>
+    
   );
 };
 
@@ -70,7 +75,7 @@ const MultiLevel = ({ item }) => {
       <List>
         <ListItem button onClick={handleClick} className={classes.buttons}>
           <ListItemIcon style={{color:"rgb(238, 238, 238)", opacity:"0.5", minWidth:"39px"}}>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.title} />
+          <ListItemText style={{ fontFamily: "Open Sans"}} primary={item.title} />
           {open ? (
             <ExpandLessIcon
               style={{ color: "rgb(238, 238, 238)", opacity: "0.5" }}

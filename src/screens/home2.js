@@ -1,6 +1,7 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter, Route } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -20,6 +21,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { logout } from "../actions/userActions";
 import Popper from "@mui/core/Popper";
+import InboundStaging from "../components/InboundStaging";
 import {
   Grow,
   MenuList,
@@ -232,7 +234,7 @@ export default function PersistentDrawerLeft() {
             flexShrink: 0,
             "& .MuiDrawer-paper": {
               width: drawerWidth,
-              backgroundColor: " rgb(47,64,123)",
+              backgroundColor: " #1C2B57",
               // backgroundColor: "#2f4d7b",
               borderRight: "none",
             },
@@ -250,7 +252,7 @@ export default function PersistentDrawerLeft() {
           <Menubar />
         </Drawer>
         <Main open={open}>
-          
+        <Route  path="/InboundStaging" component={InboundStaging} />
         </Main>
       </Box>
     </React.Fragment>

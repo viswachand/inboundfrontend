@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 
 const primary = "#2F407B";
-const secondary = "#FFFFF";
+const secondary = "#2F407B";
 const common = "#2F407B,";
 
 export default createTheme({
@@ -18,12 +18,17 @@ export default createTheme({
       main: `${secondary}`,
     },
   },
+
   typography: {
     body1: {
-      fontSize: "13px",
+      // fontSize: "14px",
+      // color: "#FFFFFF",
+      // fontWeight: "500",
+      // fontFamily: "Open Sans",
       color: "#FFFFFF",
-      fontWeight: "400",
       fontFamily: "Open Sans",
+      fontWeight: "400",
+      fontSize: "14px",
     },
 
     h6: {
@@ -36,6 +41,62 @@ export default createTheme({
   },
 
   components: {
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#FFFFFF",
+          border: "1px solid #1C2B57",
+          padding: 4,
+          borderRadius: "4px",
+        },
+        input: {
+          height: "1rem",
+          font: "revert",
+          width:"12rem"
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        formControl: {
+          transform: "none",
+        },
+        animated: {
+          transform: "none",
+        },
+        shrink: {
+          transform: "none",
+        },
+      
+      },
+    },
+
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color:"#3C4953",
+          fontFamily: "Open Sans",
+          fontWeight:"500",
+          fontSize: "14px",
+          paddingBottom:"10px",
+          lineHeight:"10px"
+        },
+      },
+    },
+
+    MuiInput: {
+      styleOverrides: {
+        underline: {
+          "&&&:before": {
+            borderBottom: "none",
+          },
+          "&&:after": {
+            borderBottom: "none",
+          },
+        },
+      },
+    },
+
     MuiCssBaseline: {
       styleOverrides: {
         body: {
@@ -75,4 +136,3 @@ export default createTheme({
     },
   },
 });
-

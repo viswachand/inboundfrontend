@@ -11,7 +11,9 @@ export const menu = [
     items: [
       {
         title: "Inbound Staging",
-        items: []
+        items: [],
+        to:"InboundStaging"
+
       },
       {
         title: "Inbound Putaway",

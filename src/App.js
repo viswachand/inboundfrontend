@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./components/theme";
 import Login from "./screens/login";
 import Home from "./screens/home2";
+import InboundStaging from "./components/InboundStaging"
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <switch>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/" component={Login} />
+              <Route  path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
+              {/* <Route  path="/InboundStaging" component={InboundStaging} /> */}
             </switch>
           </BrowserRouter>
         </ThemeProvider>
