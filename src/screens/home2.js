@@ -22,6 +22,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { logout } from "../actions/userActions";
 import Popper from "@mui/core/Popper";
 import InboundStaging from "../components/InboundStaging";
+
 import {
   Grow,
   MenuList,
@@ -29,7 +30,7 @@ import {
   Paper,
   ClickAwayListener,
 } from "@mui/material";
-import Companylogo from "../components/companyicon";
+import Companylogo from "../assests/logo.svg";
 
 const drawerWidth = 250;
 
@@ -245,14 +246,14 @@ export default function PersistentDrawerLeft() {
         >
           <DrawerHeader>
 
-        
+        <img src={Companylogo} alt="Companylogo"></img>
           </DrawerHeader>
           <Divider />
           <Typography variant="h6">WDLS Dashboard</Typography>
           <Menubar />
         </Drawer>
         <Main open={open}>
-        <Route  path="/InboundStaging" component={InboundStaging} />
+        <Route exact path="/InboundStaging" component={InboundStaging} />
         </Main>
       </Box>
     </React.Fragment>

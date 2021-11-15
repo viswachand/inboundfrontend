@@ -52,7 +52,7 @@ export default createTheme({
         input: {
           height: "1rem",
           font: "revert",
-          width:"12rem"
+          width:"13rem"
         },
       },
     },
