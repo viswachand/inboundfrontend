@@ -13,8 +13,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import Avatar from "../components/AccountAvatar";
 import Menubar from "./menubar";
 import ListItemText from "@mui/material/ListItemText";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -168,6 +167,9 @@ export default function PersistentDrawerLeft() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {""}
             </Typography>
+            <div>
+              <Avatar />
+            </div>
             <Button
               color="inherit"
               ref={anchorRef}
@@ -245,15 +247,14 @@ export default function PersistentDrawerLeft() {
           open={open}
         >
           <DrawerHeader>
-
-        <img src={Companylogo} alt="Companylogo"></img>
+            <img src={Companylogo} alt="Companylogo"></img>
           </DrawerHeader>
           <Divider />
           <Typography variant="h6">WDLS Dashboard</Typography>
           <Menubar />
         </Drawer>
         <Main open={open}>
-        <Route exact path="/InboundStaging" component={InboundStaging} />
+          <Route exact path="/home/InboundStaging" component={InboundStaging} />
         </Main>
       </Box>
     </React.Fragment>

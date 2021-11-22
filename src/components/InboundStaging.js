@@ -8,6 +8,8 @@ import CardContent from "@mui/material/CardContent";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Options from "../components/optionsButton";
+import { useDispatch } from "react-redux";
+import { Tally } from "../actions/inboundActions";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -33,10 +35,13 @@ export default function InboundStaging() {
   const [Qty, setQty] = useState("");
   const [Open, setOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
   const Submit = (event) => {
     if (event.keyCode === 13) {
       setOpen((prevOpen) => !prevOpen);
-      console.log(tally + "working");
+      dispatch(Tally(tally));
+   
     }
   };
 

@@ -12,12 +12,13 @@ export const menu = [
       {
         title: "Inbound Staging",
         items: [],
-        to:"InboundStaging"
+        to:"/home/InboundStaging"
 
       },
       {
         title: "Inbound Putaway",
-        items: []
+        items: [],
+        to:"/home"
       },
       {
         title: "Inbound 1-Step",

@@ -10,17 +10,15 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
+
 
 import { menu } from "../components/menu";
 import { hasChildren } from "../components/util";
 
 const useStyles = makeStyles((theme) => ({
-  
   secondarytext: {
-   
-    backgroundColor:"#2F407B",
-    
+    backgroundColor: "#2F407B",
   },
   icons: {
     color: "",
@@ -35,28 +33,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Nav() {
-  return menu.map((item, key) => <MenuItem key={key} item={item} />);
+  return menu.map((item, key) => <><MenuItem key={key} item={item} /></>);
 }
 
 const MenuItem = ({ item }) => {
   const Component = hasChildren(item) ? MultiLevel : SingleLevel;
-  return <Component item={item} />;
+  return <Component item={item} />
+  
+  ;
 };
 
 const SingleLevel = ({ item }) => {
   const classes = useStyles();
   return (
-    <ListItem
-      button
-      component={Link}
-      to={item.to || "/404"}
-      className={classes.buttons}
-    >
-      <ListItemIcon style={{color:"rgb(238, 238, 238)", opacity:"0.5", minWidth:"39px"}}>{item.icon}</ListItemIcon>
-      <ListItemText primary={item.title} />
-      <Divider />
-    </ListItem>
-    
+    <>
+      <ListItem
+        button
+        component={Link}
+        to={item.to || "/404"}
+        className={classes.buttons}
+      >
+        <ListItemIcon
+          style={{
+            color: "rgb(238, 238, 238)",
+            opacity: "0.5",
+            minWidth: "39px",
+          }}
+        >
+          {item.icon}
+        </ListItemIcon>
+        <ListItemText primary={item.title} />
+        <Divider />
+      </ListItem>
+     
+    </>
   );
 };
 
@@ -74,15 +84,25 @@ const MultiLevel = ({ item }) => {
       <CssBaseline />
       <List>
         <ListItem button onClick={handleClick} className={classes.buttons}>
-          <ListItemIcon style={{color:"rgb(238, 238, 238)", opacity:"0.5", minWidth:"39px"}}>{item.icon}</ListItemIcon>
-          <ListItemText style={{ fontFamily: "Open Sans"}} primary={item.title} />
+          <ListItemIcon
+            style={{
+              color: "rgb(238, 238, 238)",
+              opacity: "0.5",
+              minWidth: "39px",
+            }}
+          >
+            {item.icon}
+          </ListItemIcon>
+          <ListItemText
+            style={{ fontFamily: "Open Sans" }}
+            primary={item.title}
+          />
           {open ? (
             <ExpandLessIcon
               style={{ color: "rgb(238, 238, 238)", opacity: "0.5" }}
             />
           ) : (
             <ExpandMoreIcon
-            
               style={{ color: "rgb(238, 238, 238)", opacity: "0.5" }}
             />
           )}
