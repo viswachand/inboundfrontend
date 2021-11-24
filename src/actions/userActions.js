@@ -6,7 +6,7 @@ import {
   USER_LOGOUT,
 } from "../constants/userConstants";
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -20,7 +20,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       "/api/user/login",
-      { email, password },
+      { username, password },
       config
     );
 
@@ -29,9 +29,9 @@ export const login = (email, password) => async (dispatch) => {
       payload: data,
     });
 
-    document.location.href = "/home";
+    // document.location.href = "/home";
 
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,

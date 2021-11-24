@@ -8,26 +8,49 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
 import Paper from "@mui/material/Paper";
-import Account from "../components/AccountUser"
+import Account from "../components/AccountUser";
 
 const theme = createTheme();
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [page, setPage] = useState(1);
+  const [value, setValue] = React.useState({
+    name: "",
+  });
 
   const dispatch = useDispatch();
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  
+
+  console.log();
+
   const submitHandler = (e) => {
     e.preventDefault();
-    // setisAutheticated(true);
-    dispatch(login(email, password));
-    setPage((page) => page + 1);
+
+    dispatch(login(username, password));
+
+    const response =userInfo[0].data[2].value;
+
+    if(response === "99"){
+      console.log("error")
+    }else{
+      setPage((page) => page + 1);
+    }
+   
+
+   
+
   };
+
+  const error = value.name !== "error";
 
   return (
     <ThemeProvider theme={theme}>
@@ -53,18 +76,16 @@ export default function SignIn() {
               Sign in
             </Typography>
             {page === 1 && (
-              <form onSubmit={submitHandler} noValidate sx={{ mt: 1 }}>
+              <form noValidate sx={{ mt: 1 }}>
                 <TextField
                   margin="normal"
                   required
                   fullWidth
                   id="email"
                   label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoFocus
+                  value={username}
+                  onChange={(e) => setusername(e.target.value)}
+                  error={error}
                 />
                 <TextField
                   margin="normal"
@@ -76,20 +97,21 @@ export default function SignIn() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   id="password"
-                  autoComplete="current-password"
+                  error={error}
+                  helperText={error ? "Invalid UserName and Password" : " "}
                 />
 
                 <Button
-                  type="submit"
+                  onClick={submitHandler}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
-                 Next
+                  Next
                 </Button>
               </form>
             )}
-            {page === 2 && <Account  />}
+            {page === 2 && <Account />}
           </Box>
         </Paper>
       </Container>
