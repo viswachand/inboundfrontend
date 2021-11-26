@@ -6,7 +6,7 @@ import {
   
   
   
-  export const InboundTally = (state = {}, action) => {
+  export const Accountselection = (state = {}, action) => {
     switch (action.type) {
       case ACCOUNT_SELECTION_REQUEST:
         return { loading: true };

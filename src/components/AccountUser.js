@@ -1,55 +1,3 @@
-// import * as React from "react";
-// import TextField from "@mui/material/TextField";
-// import Button from "@mui/material/Button";
-// import InputAdornment from "@mui/material/InputAdornment";
-// import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-// import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-
-// function AccountUser() {
-//   const [openuser, setOpenuser] = React.useState(false);
-
-//   const submitHandler = (e) => {
-//     setOpenuser(true);
-//     console.log("LOGIN");
-//   };
-//  const buttonclick = () =>{
-//     setOpenuser((prevOpen) => !prevOpen);
-//   }
-//   return (
-//     <div>
-//       <form onSubmit={submitHandler} noValidate sx={{ mt: 1 }}>
-//         <TextField
-//           margin="normal"
-//           required
-//           fullWidth
-//           label="Account Selection"
-//           autoFocus
-//           InputProps={{
-//             endAdornment: (
-//               <Button    onClick={buttonclick}>
-//                 <InputAdornment position="end">
-//                   {openuser ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
-//                 </InputAdornment>
-//               </Button>
-//             ),
-//           }}
-//         />
-
-//         <Button
-//           type="submit"
-//           fullWidth
-//           variant="contained"
-//           sx={{ mt: 3, mb: 2 }}
-//         >
-//           Sign In
-//         </Button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default AccountUser;
-
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -63,8 +11,8 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useDispatch } from "react-redux";
-import {AccountSelection} from "../actions/AccountActions"
+import { useDispatch, useSelector } from "react-redux";
+import { AccountSelection } from "../actions/AccountActions";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -109,22 +57,23 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-
-
 export default function CustomizedMenus() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [options, setoptions] = React.useState("");
   const open = Boolean(anchorEl);
 
-
   const dispatch = useDispatch();
+
+
+  // const data = localStorage.getItem('AccountInfo')
+  // console.log(data)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    dispatch(AccountSelection());
   };
   const handleClose = () => {
     setAnchorEl(null);
-    dispatch(AccountSelection())
   };
 
   return (
@@ -162,11 +111,7 @@ export default function CustomizedMenus() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem
-          onClick={handleClose}
-         
-          disableRipple
-        >
+        <MenuItem onClick={handleClose} disableRipple>
           <EditIcon />
           Edit
         </MenuItem>
@@ -174,7 +119,7 @@ export default function CustomizedMenus() {
           <FileCopyIcon />
           Duplicate
         </MenuItem>
-       
+
         <MenuItem onClick={handleClose} disableRipple>
           <ArchiveIcon />
           Archive

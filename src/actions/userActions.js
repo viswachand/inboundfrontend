@@ -31,6 +31,8 @@ export const login = (username, password) => async (dispatch) => {
 
     // document.location.href = "/home";
 
+    localStorage.setItem('userInfo', JSON.stringify(data))
+
     
   } catch (error) {
     dispatch({

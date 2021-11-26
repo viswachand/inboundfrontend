@@ -27,6 +27,9 @@ export const AccountSelection = () => async (dispatch) => {
       type: ACCOUNT_SELECTION_SUCCESS,
       payload: data,
     });
+    
+    localStorage.setItem('AccountInfo', JSON.stringify(data))
+    
   } catch (error) {
     dispatch({
       type: ACCOUNT_SELECTION_FAIL,

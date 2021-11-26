@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,15 +10,17 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
+
 import Paper from "@mui/material/Paper";
 import Account from "../components/AccountUser";
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn({ location, history }) {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [page, setPage] = useState(1);
+  const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState({
     name: "",
   });
@@ -28,29 +30,23 @@ export default function SignIn() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const data = JSON.stringify(userInfo)
+
   
 
-  console.log();
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
+  const submitHandler = () => {
     dispatch(login(username, password));
-
-    const response =userInfo[0].data[2].value;
-
-    if(response === "99"){
-      console.log("error")
-    }else{
-      setPage((page) => page + 1);
-    }
+    
    
 
-   
+  
 
+     
+
+    setPage((page) => page + 1);
   };
 
-  const error = value.name !== "error";
+  const error = value.name === "error";
 
   return (
     <ThemeProvider theme={theme}>
