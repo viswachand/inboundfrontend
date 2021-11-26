@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -30,18 +29,8 @@ export default function SignIn({ location, history }) {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const data = JSON.stringify(userInfo)
-
-  
-
   const submitHandler = () => {
     dispatch(login(username, password));
-    
-   
-
-  
-
-     
 
     setPage((page) => page + 1);
   };
