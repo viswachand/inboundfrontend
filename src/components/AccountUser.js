@@ -62,11 +62,29 @@ export default function CustomizedMenus() {
   const [options, setoptions] = React.useState("");
   const open = Boolean(anchorEl);
 
+  var data;
+
   const dispatch = useDispatch();
 
+  const userLogin = useSelector((state) => state.accountInfo);
 
-  // const data = localStorage.getItem('AccountInfo')
-  // console.log(data)
+  const { AccountData } = userLogin;
+
+  if (AccountData != null && AccountData.length > 0) {
+    for (let i = 0; i < AccountData.length; i++) {
+      // user = AccountData[i].EOUSER;
+      // username = AccountData[i].EONAME;
+      // store = AccountData[i].EOSTOR;
+      // building = AccountData[i].EOBLDG;
+      // stat = AccountData[i].EOSTAT;
+
+      // console.log(stat)
+
+      data = AccountData[i].EOUSER[i];
+    }
+  }
+
+  // EOUSER, EONAME, EOSTOR, EOSSFX, EOBLDG, EOSTAT
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -113,20 +131,7 @@ export default function CustomizedMenus() {
       >
         <MenuItem onClick={handleClose} disableRipple>
           <EditIcon />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <FileCopyIcon />
-          Duplicate
-        </MenuItem>
-
-        <MenuItem onClick={handleClose} disableRipple>
-          <ArchiveIcon />
-          Archive
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <MoreHorizIcon />
-          More
+          {data}
         </MenuItem>
       </StyledMenu>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

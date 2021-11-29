@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
-
+import Loader from "../components/loading";
 import Paper from "@mui/material/Paper";
 import Account from "../components/AccountUser";
 
@@ -25,28 +25,40 @@ export default function SignIn({ location, history }) {
     name: "",
   });
 
+  var data;
+  var DataValue;
+
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { userInfo, loading } = userLogin;
 
-  const data = JSON.stringify(userInfo)
+  if (userInfo != null && userInfo.length > 0) {
+    for (let i = 0; i < userInfo.length; i++) {
+      data = userInfo[i].data;
+    }
 
-  
+    if (data != null && data.length > 0) {
+      for (let i = 0; i < data.length; i++) {
+        DataValue = data[i].value;
+      }
+    }
+  }
+
+  const run = () => {
+    if (DataValue === "") {
+      setPage((page) => page + 1);
+    } else {
+      setValue("error");
+    }
+  };
 
   const submitHandler = () => {
     dispatch(login(username, password));
-    
-   
-
-  
-
-     
-
-    setPage((page) => page + 1);
+    run();
   };
 
-  const error = value.name === "error";
+  const error = value === "error";
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,8 +76,8 @@ export default function SignIn({ location, history }) {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
+            <Avatar sx={{ m: 1, bgcolor: "ash" }}>
+              {loading ? <Loader /> : <LockOutlinedIcon />}
             </Avatar>
 
             <Typography component="h1" variant="h5">
