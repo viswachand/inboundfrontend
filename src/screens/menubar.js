@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { styled, useTheme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 import List from "@mui/material/List";

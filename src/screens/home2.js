@@ -1,7 +1,7 @@
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import { useDispatch} from "react-redux";
+import { Route } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -102,12 +102,11 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
-  const theme = useTheme();
+
   const [open, setOpen] = React.useState(false);
 
   // const mediaquary = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const [value, setValue] = React.useState(0);
   const [openuser, setOpenuser] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -129,9 +128,9 @@ export default function PersistentDrawerLeft() {
     }
   }
 
-  const userLogin = useSelector((state) => state.userLogin);
 
-  const { userInfo } = userLogin;
+
+  
 
   const dispatch = useDispatch();
 
@@ -143,9 +142,6 @@ export default function PersistentDrawerLeft() {
     setOpen(true);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   return (
     <React.Fragment>

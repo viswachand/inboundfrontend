@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -20,7 +19,6 @@ export default function SignIn({ location, history }) {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [page, setPage] = useState(1);
-  const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState({
     name: "",
   });
@@ -32,6 +30,10 @@ export default function SignIn({ location, history }) {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo, loading } = userLogin;
+
+  // const userInfoFromStorage = localStorage.getItem('userInfo')
+
+  // console.log(userInfoFromStorage)
 
   if (userInfo != null && userInfo.length > 0) {
     for (let i = 0; i < userInfo.length; i++) {

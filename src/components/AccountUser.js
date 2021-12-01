@@ -4,10 +4,6 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -72,15 +68,9 @@ export default function CustomizedMenus() {
 
   if (AccountData != null && AccountData.length > 0) {
     for (let i = 0; i < AccountData.length; i++) {
-      // user = AccountData[i].EOUSER;
-      // username = AccountData[i].EONAME;
-      // store = AccountData[i].EOSTOR;
-      // building = AccountData[i].EOBLDG;
-      // stat = AccountData[i].EOSTAT;
-
-      // console.log(stat)
-
-      data = AccountData[i].EOUSER[i];
+      data = AccountData[i].EONAME;
+      var store = AccountData[i].EOSTOR;
+      console.log(data);
     }
   }
 
@@ -89,8 +79,10 @@ export default function CustomizedMenus() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     dispatch(AccountSelection());
+   
   };
   const handleClose = () => {
+    document.location.href = "/home";
     setAnchorEl(null);
   };
 
@@ -130,8 +122,7 @@ export default function CustomizedMenus() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose} disableRipple>
-          <EditIcon />
-          {data}
+          {` ${data} --- store : ${store}`}
         </MenuItem>
       </StyledMenu>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
