@@ -28,8 +28,10 @@ export const AccountSelection = () => async (dispatch) => {
       payload: data,
     });
     
-    localStorage.setItem('accountInfo', JSON.stringify(data))
-    
+
+
+    // localStorage.setItem('accountInfo', JSON.stringify(data))
+
 
     
   } catch (error) {

@@ -19,48 +19,24 @@ export default function SignIn({ location, history }) {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [page, setPage] = useState(1);
-  const [value, setValue] = React.useState({
-    name: "",
-  });
-
-  var data;
-  var DataValue;
 
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo, loading } = userLogin;
-
-  // const userInfoFromStorage = localStorage.getItem('userInfo')
-
-  // console.log(userInfoFromStorage)
-
-  if (userInfo != null && userInfo.length > 0) {
-    for (let i = 0; i < userInfo.length; i++) {
-      data = userInfo[i].data;
-    }
-
-    if (data != null && data.length > 0) {
-      for (let i = 0; i < data.length; i++) {
-        DataValue = data[i].value;
-      }
-    }
-  }
+  const { loading, error, userInfo } = userLogin;
 
   const run = () => {
-    if (DataValue === "") {
+    if (userInfo) {
+      console.log(userInfo);
       setPage((page) => page + 1);
-    } else {
-      setValue("error");
     }
   };
 
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
     dispatch(login(username, password));
     run();
   };
-
-  const error = value === "error";
 
   return (
     <ThemeProvider theme={theme}>
