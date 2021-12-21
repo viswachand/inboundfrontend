@@ -5,7 +5,7 @@ import {
   INBOUND_TALLY_FAIL,
 } from "../constants/inboundConstants";
 
-export const Tally = (tallyNumber) => async (dispatch) => {
+export const Tally = (tally,item) => async (dispatch) => {
 
     
   try {
@@ -20,9 +20,10 @@ export const Tally = (tallyNumber) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "/api/inbound/tallyNumber",
-      {tallyNumber},
-      config
+      "/check1",
+      {tally,item},
+      config,
+      
     );
 
     dispatch({

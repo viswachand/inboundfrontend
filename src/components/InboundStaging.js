@@ -8,7 +8,7 @@ import CardContent from "@mui/material/CardContent";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Options from "../components/optionsButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Tally } from "../actions/inboundActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,14 +34,22 @@ export default function InboundStaging() {
   const [item, setitem] = useState("");
   const [Qty, setQty] = useState("");
   const [Open, setOpen] = useState(false);
+  const [values, setValues] = React.useState({
+    name: "",
+  });
 
   const dispatch = useDispatch();
 
+  const inboundData = useSelector((state) => state.inboundStaging);
+
+  const { TallyNumber } = inboundData;
+
+  console.log(TallyNumber)
+
   const Submit = (event) => {
     if (event.keyCode === 13) {
+      dispatch(Tally(tally, item));
       setOpen((prevOpen) => !prevOpen);
-      dispatch(Tally(tally));
-   
     }
   };
 
@@ -65,9 +73,12 @@ export default function InboundStaging() {
                     >
                       <Grid item>
                         <TextField
+                          fullWidth
                           focused={false}
                           variant="standard"
                           label="TallyNumber:"
+                          // error
+                          // helperText = "Tally Number not available"
                           onChange={(e) => settally(e.target.value)}
                         />
                       </Grid>
@@ -108,7 +119,9 @@ export default function InboundStaging() {
                       </Grid>
                     </Grid>
 
-                    {Open ? (
+                    {TallyNumber !== "Tally Not Found." &&
+                    TallyNumber !== "Item Not Valid." &&
+                    Open ? (
                       <Grid
                         container
                         spacing={1}
@@ -136,14 +149,13 @@ export default function InboundStaging() {
                             label="Location:"
                           />
                         </Grid>
-                        <br/>
-                        <CardActions className={classes.options}>
-                        <Options />
-
                         <br />
-                      </CardActions>
+                        <CardActions className={classes.options}>
+                          <Options />
+
+                          <br />
+                        </CardActions>
                       </Grid>
-                     
                     ) : (
                       <CardActions className={classes.options}>
                         <Options />

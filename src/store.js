@@ -7,6 +7,9 @@ import {
 import {
   Accountselection,
 } from './reducers/AccountReducers'
+import {
+  InboundTally,
+} from './reducers/inboundReducers'
 
 
 
@@ -14,7 +17,7 @@ const reducer = combineReducers({
  
   userLogin: userLoginReducer,
   accountInfo : Accountselection,
-
+  inboundStaging : InboundTally,
 })
 
 
