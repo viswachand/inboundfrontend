@@ -21,6 +21,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { logout } from "../actions/userActions";
 import Popper from "@mui/core/Popper";
 import InboundStaging from "../components/InboundStaging";
+import Inbound1step from "../components/inbound1step";
 
 import {
   Grow,
@@ -218,7 +219,7 @@ export default function PersistentDrawerLeft() {
                         id="menu-list-grow"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+                        <MenuItem style={{color: "black"}} onClick={logoutHandler}>Logout</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
@@ -251,6 +252,7 @@ export default function PersistentDrawerLeft() {
         </Drawer>
         <Main open={open}>
           <Route exact path="/home/InboundStaging" component={InboundStaging} />
+          <Route exact path="/home/InboundInbound1step" component={Inbound1step} />
         </Main>
       </Box>
     </React.Fragment>

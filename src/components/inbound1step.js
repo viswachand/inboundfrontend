@@ -33,9 +33,6 @@ export default function InboundStaging() {
   const [tally, settally] = useState("");
   const [item, setitem] = useState("");
   const [Qty, setQty] = useState("");
-  const [Typ, setType] = useState("");
-  const [lot, setLot] = useState("");
-  const [loc, setLoc] = useState("");
   const [Open, setOpen] = useState(false);
   const [values, setValues] = React.useState({
     name: "",
@@ -51,11 +48,11 @@ export default function InboundStaging() {
 
   const { value: Name } = data ?? "";
 
-
+  console.log(Name);
 
   const Submit = (event) => {
     if (event.keyCode === 13) {
-      dispatch(Tally(tally, item, Qty, Typ, lot, loc));
+      dispatch(Tally(tally, item));
       setOpen((prevOpen) => !prevOpen);
     }
   };
@@ -67,7 +64,7 @@ export default function InboundStaging() {
           <Grid item md={4}></Grid>
           <Grid item md={3}>
             <Card>
-              <CardHeader title="Inbound Staging" className={classes.title} />
+              <CardHeader title="Inbound 1 - Step" className={classes.title} />
               <CardContent>
                 <div>
                   <form onKeyDown={(e) => Submit(e)}>
@@ -122,7 +119,6 @@ export default function InboundStaging() {
                           focused={false}
                           variant="standard"
                           label="Type:"
-                          onChange={(e) => setType(e.target.value)}
                         />
                       </Grid>
                     </Grid>
@@ -155,7 +151,6 @@ export default function InboundStaging() {
                             focused={false}
                             variant="standard"
                             label="Location:"
-                            onChange={(e) => setLoc(e.target.value)}
                           />
                         </Grid>
                         <br />
@@ -177,7 +172,7 @@ export default function InboundStaging() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item md={4} ></Grid>
+          <Grid item md={4}></Grid>
         </Grid>
       </Box>
     </div>

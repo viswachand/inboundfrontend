@@ -22,7 +22,8 @@ export const menu = [
       },
       {
         title: "Inbound 1-Step",
-        items: []
+        items: [],
+        to:"/home/InboundInbound1step"
       },
       {
         title: "Floor Moves",

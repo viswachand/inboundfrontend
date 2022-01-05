@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useDispatch, useSelector } from "react-redux";
-import { AccountSelection } from "../actions/AccountActions";
+import { AccountSelection, AccountUpdation } from "../actions/AccountActions";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -63,25 +63,19 @@ export default function CustomizedMenus() {
 
   const userLogin = useSelector((state) => state.accountInfo);
 
-  const { AccountData } = userLogin;
+  const { loading, error, userInfo } = userLogin;
 
-  if (AccountData != null && AccountData.length > 0) {
-    for (let i = 0; i < AccountData.length; i++) {
-      data = AccountData[i].EONAME;
-      var store = AccountData[i].EOSTOR;
-      console.log(data);
-    }
-  }
+  const [DemoData] = userLogin.AccountData || [];
 
-  // EOUSER, EONAME, EOSTOR, EOSSFX, EOBLDG, EOSTAT
+  const { E1USER, E1NAME, E1STOR, E1SSFX, E1BLDG, E1STAT } = DemoData || [];
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     dispatch(AccountSelection());
-   
   };
   const handleClose = () => {
-    document.location.href = "/home";
+    dispatch(AccountUpdation());
+    // document.location.href = "/home";
     setAnchorEl(null);
   };
 
@@ -118,10 +112,9 @@ export default function CustomizedMenus() {
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
       >
         <MenuItem onClick={handleClose} disableRipple>
-          {` ${data} --- store : ${store}`}
+          {` ${E1NAME} --- store : ${E1STOR}`}
         </MenuItem>
       </StyledMenu>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
