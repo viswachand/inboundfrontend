@@ -25,12 +25,18 @@ export default function SignIn({ location, history }) {
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
+  console.log(userInfo);
+
+  const run = () => {
+    if (userInfo) {
+      setPage((page) => page + 1);
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-
     dispatch(login(username, password));
-    
-    setPage((page) => page + 1);
+    run();
   };
 
   return (

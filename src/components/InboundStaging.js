@@ -30,11 +30,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InboundStaging() {
   const classes = useStyles();
-  const [tally, settally] = useState("");
+  const [tallyNumber, settally] = useState("");
   const [item, setitem] = useState("");
-  const [Qty, setQty] = useState("");
+  const [Quantity, setQty] = useState("");
   const [Typ, setType] = useState("");
-  const [lot, setLot] = useState("");
+  const [lot1, setLot] = useState("");
+  const [lot2, setLot2] = useState("");
+  const [lot3, setLot3] = useState("");
+  const [LotUnitWeight, setLotUnitWeight] = useState("");
+  const [InventoryType, setInventoryType] = useState("");
   const [loc, setLoc] = useState("");
   const [Open, setOpen] = useState(false);
   const [values, setValues] = React.useState({
@@ -47,18 +51,59 @@ export default function InboundStaging() {
 
   const { TallyNumber } = inboundData;
 
-  const [data, demotally, ...demodata] = TallyNumber || [];
+  const [ArrayData] = TallyNumber || [];
 
-  const { value: Name } = data ?? "";
+  const { data } = ArrayData ?? "";
 
+  const [
+    username,
+    tallyNumbers,
+    itemNumber,
+    Lot1Num,
+    Lot2Num,
+    Lot3Num,
+    LUW,
+    QuantityNum,
+    InventoryNum,
+    errorMSG,
+    errorMSG2,
+  ] = data || [];
 
+  console.log(
+    username,
+    tallyNumbers,
+    itemNumber,
+    Lot1Num,
+    Lot2Num,
+    Lot3Num,
+    LUW,
+    QuantityNum,
+    InventoryNum,
+    errorMSG,
+    errorMSG2
+  );
 
   const Submit = (event) => {
     if (event.keyCode === 13) {
-      dispatch(Tally(tally, item, Qty, Typ, lot, loc));
+      dispatch(
+        Tally(
+          tallyNumber,
+          item,
+          lot1,
+          lot2,
+          lot3,
+          LotUnitWeight,
+          Quantity,
+          InventoryType
+        )
+      );
       setOpen((prevOpen) => !prevOpen);
     }
   };
+
+  const { value: errorValue, type } = errorMSG2 || "";
+
+  console.log(errorValue);
 
   return (
     <div>
@@ -84,8 +129,12 @@ export default function InboundStaging() {
                           focused={false}
                           variant="standard"
                           label="TallyNumber:"
-                          // error
-                          // helperText = "Tally Number not available"
+                          error={errorValue == "Tally Not Found."}
+                          helperText={
+                            errorValue == "Tally Not Found."
+                              ? "Tally Number not available"
+                              : ""
+                          }
                           onChange={(e) => settally(e.target.value)}
                         />
                       </Grid>
@@ -94,6 +143,12 @@ export default function InboundStaging() {
                           focused={false}
                           variant="standard"
                           label="Item:"
+                          error={errorValue == "Item Not Valid."}
+                          helperText={
+                            errorValue == "Item Not Valid."
+                              ? "Item Number not available"
+                              : ""
+                          }
                           onChange={(e) => setitem(e.target.value)}
                         />
                       </Grid>
@@ -112,6 +167,12 @@ export default function InboundStaging() {
                           style={{ width: "9rem" }}
                           focused={false}
                           variant="standard"
+                          error={errorValue == "Quantity Not Valid."}
+                          helperText={
+                            errorValue == "Quantity Not Valid."
+                              ? "Enter Quantity"
+                              : ""
+                          }
                           label="Quantity:"
                           onChange={(e) => setQty(e.target.value)}
                         />
@@ -127,8 +188,9 @@ export default function InboundStaging() {
                       </Grid>
                     </Grid>
 
-                    {TallyNumber !== "Tally Not Found." &&
-                    TallyNumber !== "Item Not Valid." &&
+                    {errorValue !== "Quantity Not Valid." &&
+                    errorValue !== "Item Not Valid." &&
+                    errorValue !== "Tally Not Found." &&
                     Open ? (
                       <Grid
                         container
@@ -142,6 +204,7 @@ export default function InboundStaging() {
                             focused={false}
                             variant="standard"
                             label="Lot:"
+                            onChange={(e) => setLot(e.target.value)}
                           />
                         </Grid>
                         <Grid item>
@@ -150,14 +213,23 @@ export default function InboundStaging() {
                         <Grid item>
                           <TextField focused={false} variant="standard" />
                         </Grid>
-                        <Grid item>
-                          <TextField
-                            focused={false}
-                            variant="standard"
-                            label="Location:"
-                            onChange={(e) => setLoc(e.target.value)}
-                          />
-                        </Grid>
+                        {errorValue !== "Lot Not Valid." &&
+                        errorValue !== "Quantity Not Valid." &&
+                        errorValue !== "Item Not Valid." &&
+                        errorValue !== "Tally Not Found." &&
+                        Open ? (
+                          <Grid item>
+                            <TextField
+                              focused={false}
+                              variant="standard"
+                              label="Location:"
+                              onChange={(e) => setLoc(e.target.value)}
+                            />
+                          </Grid>
+                        ) : (
+                          ""
+                        )}
+
                         <br />
                         <CardActions className={classes.options}>
                           <Options />
@@ -177,7 +249,7 @@ export default function InboundStaging() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item md={4} ></Grid>
+          <Grid item md={4}></Grid>
         </Grid>
       </Box>
     </div>

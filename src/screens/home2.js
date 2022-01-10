@@ -22,6 +22,7 @@ import { logout } from "../actions/userActions";
 import Popper from "@mui/core/Popper";
 import InboundStaging from "../components/InboundStaging";
 import Inbound1step from "../components/inbound1step";
+import { useSelector } from "react-redux";
 
 import {
   Grow,
@@ -106,6 +107,11 @@ export default function PersistentDrawerLeft() {
 
   const [open, setOpen] = React.useState(false);
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+
+  
+
   // const mediaquary = useMediaQuery(theme.breakpoints.down("xs"));
 
   const [openuser, setOpenuser] = React.useState(false);
@@ -188,7 +194,7 @@ export default function PersistentDrawerLeft() {
 
                   fontSize: "10px",
                 }}
-                primary="viswachand"
+                primary={userInfo}
                 secondary="THE SHIPPERS GROUP"
               />
               {openuser ? (
