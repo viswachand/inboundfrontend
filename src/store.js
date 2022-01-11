@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userLoginReducer } from "./reducers/userReducers";
 import { Accountselection, AccountUpdation } from "./reducers/AccountReducers";
-import { InboundTally } from "./reducers/inboundReducers";
+import { InboundTally, Location, Save } from "./reducers/inboundReducers";
 import {
   Equipmentselection,
   EquipmentUpdation,
@@ -18,6 +18,8 @@ const reducer = combineReducers({
   Equipmentselection: Equipmentselection,
   EquipmentUpdation: EquipmentUpdation,
   EquipmentDeletion: EquipmentDeletion,
+  Location : Location,
+  Save: Save,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

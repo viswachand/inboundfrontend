@@ -9,7 +9,7 @@ import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Options from "../components/optionsButton";
 import { useDispatch, useSelector } from "react-redux";
-import { Tally } from "../actions/inboundActions";
+import { Tally, Location } from "../actions/inboundActions";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -41,6 +41,7 @@ export default function InboundStaging() {
   const [InventoryType, setInventoryType] = useState("");
   const [loc, setLoc] = useState("");
   const [Open, setOpen] = useState(false);
+  const [LocOpen, setLocOpen] = useState(false);
   const [values, setValues] = React.useState({
     name: "",
   });
@@ -83,7 +84,7 @@ export default function InboundStaging() {
     errorMSG2
   );
 
-  const Submit = (event) => {
+  const TypSubmit = (event) => {
     if (event.keyCode === 13) {
       dispatch(
         Tally(
@@ -98,6 +99,29 @@ export default function InboundStaging() {
         )
       );
       setOpen((prevOpen) => !prevOpen);
+    }
+  };
+  const TypLot = (event) => {
+    if (event.keyCode === 13) {
+      dispatch(
+        Tally(
+          tallyNumber,
+          item,
+          lot1,
+          lot2,
+          lot3,
+          LotUnitWeight,
+          Quantity,
+          InventoryType
+        )
+      );
+      setLocOpen((prevOpen) => !prevOpen);
+      console.log("hy");
+    }
+  };
+  const TypLoc = (event) => {
+    if (event.keyCode === 13) {
+      dispatch(Location(tallyNumber, loc));
     }
   };
 
@@ -115,7 +139,7 @@ export default function InboundStaging() {
               <CardHeader title="Inbound Staging" className={classes.title} />
               <CardContent>
                 <div>
-                  <form onKeyDown={(e) => Submit(e)}>
+                  <form onKeyUp={TypSubmit}>
                     <Grid
                       container
                       spacing={1}
@@ -187,64 +211,76 @@ export default function InboundStaging() {
                         />
                       </Grid>
                     </Grid>
+                  </form>
 
-                    {errorValue !== "Quantity Not Valid." &&
-                    errorValue !== "Item Not Valid." &&
-                    errorValue !== "Tally Not Found." &&
-                    Open ? (
-                      <Grid
-                        container
-                        spacing={1}
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Grid item>
-                          <TextField
-                            focused={false}
-                            variant="standard"
-                            label="Lot:"
-                            onChange={(e) => setLot(e.target.value)}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <TextField focused={false} variant="standard" />
-                        </Grid>
-                        <Grid item>
-                          <TextField focused={false} variant="standard" />
-                        </Grid>
-                        {errorValue !== "Lot Not Valid." &&
-                        errorValue !== "Quantity Not Valid." &&
-                        errorValue !== "Item Not Valid." &&
-                        errorValue !== "Tally Not Found." &&
-                        Open ? (
+                  <div>
+                    <form onKeyUp={TypLot}>
+                      {errorValue !== "Quantity Not Valid." &&
+                      errorValue !== "Item Not Valid." &&
+                      errorValue !== "Tally Not Found." &&
+                      Open ? (
+                        <Grid
+                          container
+                          spacing={1}
+                          direction="column"
+                          justifyContent="center"
+                          alignItems="center"
+                        >
                           <Grid item>
                             <TextField
                               focused={false}
                               variant="standard"
-                              label="Location:"
-                              onChange={(e) => setLoc(e.target.value)}
+                              label="Lot:"
+                              error={errorValue == "Lot Not Valid."}
+                              helperText={
+                                errorValue == "Lot Not Valid."
+                                  ? "Enter The Lot Number"
+                                  : ""
+                              }
+                              onChange={(e) => setLot(e.target.value)}
                             />
+                          </Grid>
+                          <Grid item>
+                            <TextField error variant="standard" />
+                          </Grid>
+                          <Grid item>
+                            <TextField error variant="standard" />
+                          </Grid>
+                        </Grid>
+                      ) : (
+                        ""
+                      )}
+                    </form>
+
+                    <div style={{marginTop:"9px"}}>
+                      <form>
+                        {errorValue !== "Lot Not Valid." && LocOpen ? (
+                          <Grid
+                            container
+                            spacing={1}
+                            direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                          >
+                            <Grid item>
+                              <TextField
+                                focused={false}
+                                variant="standard"
+                                label="Location:"
+                              />
+                            </Grid>
                           </Grid>
                         ) : (
                           ""
                         )}
-
-                        <br />
-                        <CardActions className={classes.options}>
-                          <Options />
-
-                          <br />
-                        </CardActions>
-                      </Grid>
-                    ) : (
-                      <CardActions className={classes.options}>
-                        <Options />
-
-                        <br />
-                      </CardActions>
-                    )}
-                  </form>
+                      </form>
+                    </div>
+                    <br/>
+                    <CardActions className={classes.options}>
+                      <Options />
+                      <br />
+                    </CardActions>
+                  </div>
                 </div>
               </CardContent>
             </Card>
