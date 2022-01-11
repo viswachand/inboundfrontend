@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./components/theme";
-import Login from "./screens/login";
+import Login from "./screens/loginValidations";
 import Home from "./screens/home2";
 
 function App() {
