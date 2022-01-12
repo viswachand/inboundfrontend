@@ -66,7 +66,7 @@ export const AccountUpdation = () => async (dispatch) => {
       payload: data,
     });
 
-    // localStorage.setItem('accountInfo', JSON.stringify(data))
+    localStorage.setItem('accountInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: ACCOUNT_UPDATION_FAIL,

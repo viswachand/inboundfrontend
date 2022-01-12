@@ -116,13 +116,13 @@ export default function InboundStaging() {
         )
       );
       setLocOpen((prevOpen) => !prevOpen);
-      
     }
   };
   const TypLoc = (event) => {
-    if (event.keyCode === 13) {
-      dispatch(Location(tallyNumber,location));
-    }
+    // event.preventDefault();
+    // event.stopPropagation();
+
+    dispatch(Location(tallyNumber, location));
   };
 
   const { value: errorValue, type } = errorMSG2 || "";
@@ -130,16 +130,95 @@ export default function InboundStaging() {
   console.log(errorValue);
 
   return (
-    <div>
-      <Box sx={{ pt: "4em" }}>
-        <Grid container>
-          <Grid item md={4}></Grid>
-          <Grid item md={3}>
-            <Card>
-              <CardHeader title="Inbound Staging" className={classes.title} />
-              <CardContent>
-                <div>
-                  <form onKeyUp={TypSubmit}>
+    <Box sx={{ pt: "4em" }}>
+      <Grid container>
+        <Grid item md={4}></Grid>
+        <Grid item md={3}>
+          <Card>
+            <CardHeader title="Inbound Staging" className={classes.title} />
+            <CardContent>
+              <div id="tallyNumber">
+                <form onKeyUp={TypSubmit}>
+                  <Grid
+                    container
+                    spacing={1}
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        fullWidth
+                        focused={false}
+                        variant="standard"
+                        label="TallyNumber:"
+                        error={errorValue == "Tally Not Found."}
+                        helperText={
+                          errorValue == "Tally Not Found."
+                            ? "Tally Number not available"
+                            : ""
+                        }
+                        onChange={(e) => settally(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        focused={false}
+                        variant="standard"
+                        label="Item:"
+                        error={errorValue == "Item Not Valid."}
+                        helperText={
+                          errorValue == "Item Not Valid."
+                            ? "Item Number not available"
+                            : ""
+                        }
+                        onChange={(e) => setitem(e.target.value)}
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid
+                    container
+                    spacing={3}
+                    sx={{ p: "8px" }}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        style={{ width: "9rem" }}
+                        focused={false}
+                        variant="standard"
+                        error={errorValue == "Quantity Not Valid."}
+                        helperText={
+                          errorValue == "Quantity Not Valid."
+                            ? "Enter Quantity"
+                            : ""
+                        }
+                        label="Quantity:"
+                        onChange={(e) => setQty(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        style={{ width: "3rem" }}
+                        focused={false}
+                        variant="standard"
+                        label="Type:"
+                        onChange={(e) => setType(e.target.value)}
+                      />
+                    </Grid>
+                  </Grid>
+                </form>
+              </div>
+
+              <div id="lot">
+                <form onKeyUp={TypLot}>
+                  {errorValue !== "Quantity Not Valid." &&
+                  errorValue !== "Item Not Valid." &&
+                  errorValue !== "Tally Not Found." &&
+                  Open ? (
                     <Grid
                       container
                       spacing={1}
@@ -149,146 +228,73 @@ export default function InboundStaging() {
                     >
                       <Grid item>
                         <TextField
-                          fullWidth
                           focused={false}
                           variant="standard"
-                          label="TallyNumber:"
-                          error={errorValue == "Tally Not Found."}
+                          label="Lot:"
+                          error={errorValue == "Lot Not Valid."}
                           helperText={
-                            errorValue == "Tally Not Found."
-                              ? "Tally Number not available"
+                            errorValue == "Lot Not Valid."
+                              ? "Enter The Lot Number"
                               : ""
                           }
-                          onChange={(e) => settally(e.target.value)}
+                          onChange={(e) => setLot(e.target.value)}
                         />
                       </Grid>
                       <Grid item>
                         <TextField
-                          focused={false}
+                          onChange={(e) => setLot2(e.target.value)}
+                          error
                           variant="standard"
-                          label="Item:"
-                          error={errorValue == "Item Not Valid."}
-                          helperText={
-                            errorValue == "Item Not Valid."
-                              ? "Item Number not available"
-                              : ""
-                          }
-                          onChange={(e) => setitem(e.target.value)}
+                        />
+                      </Grid>
+                      <Grid item>
+                        <TextField
+                          onChange={(e) => setLot3(e.target.value)}
+                          error
+                          variant="standard"
                         />
                       </Grid>
                     </Grid>
+                  ) : (
+                    ""
+                  )}
+                </form>
+              </div>
 
+              <div id="location" style={{ marginTop: "9px" }}>
+                <form onClick={TypLoc}>
+                  {errorValue !== "Lot Not Valid." && LocOpen ? (
                     <Grid
                       container
-                      spacing={3}
-                      sx={{ p: "8px" }}
-                      direction="row"
+                      spacing={1}
+                      direction="column"
                       justifyContent="center"
                       alignItems="center"
                     >
                       <Grid item>
                         <TextField
-                          style={{ width: "9rem" }}
                           focused={false}
                           variant="standard"
-                          error={errorValue == "Quantity Not Valid."}
-                          helperText={
-                            errorValue == "Quantity Not Valid."
-                              ? "Enter Quantity"
-                              : ""
-                          }
-                          label="Quantity:"
-                          onChange={(e) => setQty(e.target.value)}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          style={{ width: "3rem" }}
-                          focused={false}
-                          variant="standard"
-                          label="Type:"
-                          onChange={(e) => setType(e.target.value)}
+                          label="Location:"
+                          onChange={(e) => setLoc(e.target.value)}
                         />
                       </Grid>
                     </Grid>
-                  </form>
+                  ) : (
+                    ""
+                  )}
+                </form>
+              </div>
 
-                  <div>
-                    <form onKeyUp={TypLot}>
-                      {errorValue !== "Quantity Not Valid." &&
-                      errorValue !== "Item Not Valid." &&
-                      errorValue !== "Tally Not Found." &&
-                      Open ? (
-                        <Grid
-                          container
-                          spacing={1}
-                          direction="column"
-                          justifyContent="center"
-                          alignItems="center"
-                        >
-                          <Grid item>
-                            <TextField
-                              focused={false}
-                              variant="standard"
-                              label="Lot:"
-                              error={errorValue == "Lot Not Valid."}
-                              helperText={
-                                errorValue == "Lot Not Valid."
-                                  ? "Enter The Lot Number"
-                                  : ""
-                              }
-                              onChange={(e) => setLot(e.target.value)}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <TextField onChange={(e) => setLot2(e.target.value)} error variant="standard" />
-                          </Grid>
-                          <Grid item>
-                            <TextField onChange={(e) => setLot3(e.target.value)} error variant="standard" />
-                          </Grid>
-                        </Grid>
-                      ) : (
-                        ""
-                      )}
-                    </form>
-
-                    <div style={{marginTop:"9px"}}>
-                      <form onKeyUp = {TypLoc}>
-                        {errorValue !== "Lot Not Valid." && LocOpen ? (
-                          <Grid
-                            container
-                            spacing={1}
-                            direction="column"
-                            justifyContent="center"
-                            alignItems="center"
-                          >
-                            <Grid item>
-                              <TextField
-                                focused={false}
-                                variant="standard"
-                                label="Location:"
-                                // onChange={(e) => setLoc(e.target.value)}
-                              />
-                            </Grid>
-                          </Grid>
-                        ) : (
-                          ""
-                        )}
-                      </form>
-                    </div>
-                    <br/>
-                    <CardActions className={classes.options}>
-                      <Options />
-                      <br />
-                    </CardActions>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item md={4}></Grid>
+              <CardActions className={classes.options}>
+                <Options />
+                <br />
+              </CardActions>
+            </CardContent>
+          </Card>
         </Grid>
-      </Box>
-    </div>
+        <Grid item md={4}></Grid>
+      </Grid>
+    </Box>
   );
 }
