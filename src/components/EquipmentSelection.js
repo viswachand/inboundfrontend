@@ -29,7 +29,7 @@ const StyledMenu = styled((props) => (
   "& .MuiPaper-root": {
     borderRadius: 6,
     marginTop: theme.spacing(1),
-    minWidth: "21.5rem",
+    minWidth: "18rem",
     color:
       theme.palette.mode === "light"
         ? "rgb(55, 65, 81)"

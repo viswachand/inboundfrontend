@@ -48,7 +48,7 @@ function Form() {
     setPage((currPage) => currPage + 1);
   };
   const eq = () => {
-    console.log("eq");
+     document.location.href = "/home";
   };
 
   const FormTitles = ["Sign Up", "AccountSelection", "EquipmentSelection"];

@@ -39,7 +39,7 @@ export default function InboundStaging() {
   const [lot3, setLot3] = useState("");
   const [LotUnitWeight, setLotUnitWeight] = useState("");
   const [InventoryType, setInventoryType] = useState("");
-  const [loc, setLoc] = useState("");
+  const [location, setLoc] = useState("");
   const [Open, setOpen] = useState(false);
   const [LocOpen, setLocOpen] = useState(false);
   const [values, setValues] = React.useState({
@@ -116,12 +116,12 @@ export default function InboundStaging() {
         )
       );
       setLocOpen((prevOpen) => !prevOpen);
-      console.log("hy");
+      
     }
   };
   const TypLoc = (event) => {
     if (event.keyCode === 13) {
-      dispatch(Location(tallyNumber, loc));
+      dispatch(Location(tallyNumber,location));
     }
   };
 
@@ -241,10 +241,10 @@ export default function InboundStaging() {
                             />
                           </Grid>
                           <Grid item>
-                            <TextField error variant="standard" />
+                            <TextField onChange={(e) => setLot2(e.target.value)} error variant="standard" />
                           </Grid>
                           <Grid item>
-                            <TextField error variant="standard" />
+                            <TextField onChange={(e) => setLot3(e.target.value)} error variant="standard" />
                           </Grid>
                         </Grid>
                       ) : (
@@ -253,7 +253,7 @@ export default function InboundStaging() {
                     </form>
 
                     <div style={{marginTop:"9px"}}>
-                      <form>
+                      <form onKeyUp = {TypLoc}>
                         {errorValue !== "Lot Not Valid." && LocOpen ? (
                           <Grid
                             container
@@ -267,6 +267,7 @@ export default function InboundStaging() {
                                 focused={false}
                                 variant="standard"
                                 label="Location:"
+                                // onChange={(e) => setLoc(e.target.value)}
                               />
                             </Grid>
                           </Grid>

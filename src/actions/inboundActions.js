@@ -43,7 +43,7 @@ export const Tally = (tallyNumber, item, lot1, lot2, lot3, LotUnitWeight, Quanti
     });
   }
 };
-export const Location = (tallyNumber, lot1, lot2, lot3) => async (dispatch) => {
+export const Location = (tallyNumber,locations) => async (dispatch) => {
   try {
     dispatch({
       type: INBOUND_LOCATION_REQUEST,
@@ -57,7 +57,7 @@ export const Location = (tallyNumber, lot1, lot2, lot3) => async (dispatch) => {
 
     const { data } = await axios.post(
       "/api/receiving/location",
-      { tallyNumber, lot1, lot2, lot3},
+      { tallyNumber,locations},
       config
     );
 
