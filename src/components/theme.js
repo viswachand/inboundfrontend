@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 const primary = "#2F407B";
 const secondary = "#2F407B";
-const common = "#2F407B,";
+
 
 export default createTheme({
   shadows: Array(25).fill("none"),

@@ -1,23 +1,3 @@
-// import { TextField } from "@mui/material";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import React from "react";
-
-// const theme = createTheme();
-
-// function EquipmentSelection() {
-//   return (
-//     <div>
-//       <ThemeProvider theme={theme}>
-//         <form noValidate sx={{ mt: 1 }}>
-//           <TextField margin="normal" required fullWidth />
-//         </form>
-//       </ThemeProvider>
-//     </div>
-//   );
-// }
-
-// export default EquipmentSelection;
-
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -34,7 +14,7 @@ const theme = createTheme();
 
 const StyledMenu = styled((props) => (
   <Menu
-   
+    elevation={0}
     anchorOrigin={{
       vertical: "bottom",
       horizontal: "right",
@@ -105,43 +85,45 @@ export default function CustomizedMenus() {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <br />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          value={options}
-          label="Account Selection"
-          autoComplete="Equipment Selection"
-          autoFocus
-          id="demo-customized-button"
-          aria-controls="demo-customized-menu"
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-          // endIcon={<ArrowDropDownIcon />}
-          InputProps={{
-            endAdornment: (
-              <Button>
-                <InputAdornment position="end">
-                  <ArrowDropDownIcon />
-                </InputAdornment>
-              </Button>
-            ),
-          }}
-        ></TextField>
-        <StyledMenu
-          id="demo-customized-menu"
-          MenuListProps={{
-            "aria-labelledby": "demo-customized-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-        >
-          <MenuItem onClick={handleClose} disableRipple>
-            {` ${E1NAME} --- store : ${E1STOR}`}
-          </MenuItem>
-        </StyledMenu>
+        <form noValidate sx={{ mt: 1 }}>
+          <br />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            value={options}
+            label="Equipment Selection"
+            autoComplete="Equipment Selection"
+            autoFocus
+            id="demo-customized-button"
+            aria-controls="demo-customized-menu"
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            // endIcon={<ArrowDropDownIcon />}
+            InputProps={{
+              endAdornment: (
+                <Button>
+                  <InputAdornment position="end">
+                    <ArrowDropDownIcon />
+                  </InputAdornment>
+                </Button>
+              ),
+            }}
+          ></TextField>
+          <StyledMenu
+            id="demo-customized-menu"
+            MenuListProps={{
+              "aria-labelledby": "demo-customized-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+          >
+            <MenuItem onClick={handleClose} disableRipple>
+              {` ${E1NAME} --- store : ${E1STOR}`}
+            </MenuItem>
+          </StyledMenu>
+        </form>
       </ThemeProvider>
     </div>
   );

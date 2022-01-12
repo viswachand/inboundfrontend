@@ -1,6 +1,10 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
+=======
+import { useDispatch} from "react-redux";
+>>>>>>> vineeth
 import { Route } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
@@ -21,6 +25,8 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { logout } from "../actions/userActions";
 import Popper from "@mui/core/Popper";
 import InboundStaging from "../components/InboundStaging";
+import Inbound1step from "../components/inbound1step";
+import { useSelector } from "react-redux";
 
 import {
   Grow,
@@ -102,11 +108,19 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
+<<<<<<< HEAD
+=======
+
+>>>>>>> vineeth
   const [open, setOpen] = React.useState(false);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+
+  
 
   // const mediaquary = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const [value, setValue] = React.useState(0);
   const [openuser, setOpenuser] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -128,9 +142,9 @@ export default function PersistentDrawerLeft() {
     }
   }
 
-  const userLogin = useSelector((state) => state.userLogin);
 
-  const { userInfo } = userLogin;
+
+  
 
   const dispatch = useDispatch();
 
@@ -142,6 +156,10 @@ export default function PersistentDrawerLeft() {
     setOpen(true);
   };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> vineeth
   return (
     <React.Fragment>
       <CssBaseline />
@@ -186,7 +204,7 @@ export default function PersistentDrawerLeft() {
 
                   fontSize: "10px",
                 }}
-                primary="viswachand"
+                primary={userInfo}
                 secondary="THE SHIPPERS GROUP"
               />
               {openuser ? (
@@ -217,7 +235,7 @@ export default function PersistentDrawerLeft() {
                         id="menu-list-grow"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+                        <MenuItem style={{color: "black"}} onClick={logoutHandler}>Logout</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
@@ -250,6 +268,7 @@ export default function PersistentDrawerLeft() {
         </Drawer>
         <Main open={open}>
           <Route exact path="/home/InboundStaging" component={InboundStaging} />
+          <Route exact path="/home/InboundInbound1step" component={Inbound1step} />
         </Main>
       </Box>
     </React.Fragment>
