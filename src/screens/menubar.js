@@ -10,6 +10,10 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
+<<<<<<< HEAD
+
+=======
+>>>>>>> vineeth
 import { menu } from "../components/menu";
 import { hasChildren } from "../components/util";
 
@@ -30,14 +34,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Nav() {
-  return menu.map((item, key) => <><MenuItem key={key} item={item} /></>);
+  return menu.map((item, key) => (
+    <>
+      <MenuItem key={key} item={item} />
+    </>
+  ));
 }
 
 const MenuItem = ({ item }) => {
   const Component = hasChildren(item) ? MultiLevel : SingleLevel;
-  return <Component item={item} />
-  
-  ;
+  return <Component item={item} />;
 };
 
 const SingleLevel = ({ item }) => {
@@ -62,7 +68,6 @@ const SingleLevel = ({ item }) => {
         <ListItemText primary={item.title} />
         <Divider />
       </ListItem>
-     
     </>
   );
 };
