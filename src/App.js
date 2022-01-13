@@ -14,7 +14,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <switch>
-              <Route  path="/home" component={Home} />
+              <Route path="/home" component={Home} />
               <Route exact path="/" component={Login} />
               {/* <Route  path="/InboundStaging" component={InboundStaging} /> */}
             </switch>
