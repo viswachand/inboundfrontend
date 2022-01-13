@@ -9,7 +9,11 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
-import { EquipmentSelection, EquipmentUpdation, EquipmentDeletion } from "../actions/equipmentActions";
+import {
+  EquipmentSelection,
+  EquipmentUpdation,
+  EquipmentDeletion,
+} from "../actions/equipmentActions";
 import Loader from "../components/loading";
 import Paper from "@mui/material/Paper";
 import Login from "../components/login";
@@ -36,19 +40,19 @@ function Form() {
   const { loading, error, userInfo } = userLogin;
 
   const submitHandler = () => {
-    dispatch(login(formData.username, formData.password));
-    if (userInfo) {
-      setPage((currPage) => currPage + 1);
-    }
+    // dispatch(login(formData.username, formData.password)).then((resp) => {
+    //   if (resp === formData.username) {
+        setPage((currPage) => currPage + 1);
+    //   }
+    // });
   };
 
   const ac = () => {
-    console.log("ac");
     dispatch(EquipmentSelection());
     setPage((currPage) => currPage + 1);
   };
   const eq = () => {
-     document.location.href = "/home";
+    document.location.href = "/home";
   };
 
   const FormTitles = ["Sign Up", "AccountSelection", "EquipmentSelection"];

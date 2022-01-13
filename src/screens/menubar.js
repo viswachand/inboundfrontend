@@ -29,25 +29,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Nav() {
-  return menu.map((item, key) => <><MenuItem key={key} item={item} /></>);
+export default function Nav({ formData, setFormData }) {
+  return menu.map((item, key) => (
+    <>
+      <MenuItem
+        formData={formData}
+        setFormData={setFormData}
+        key={key}
+        item={item}
+      />
+    </>
+  ));
 }
 
-const MenuItem = ({ item }) => {
+const MenuItem = ({ item, formData, setFormData }) => {
   const Component = hasChildren(item) ? MultiLevel : SingleLevel;
-  return <Component item={item} />
-  
-  ;
+  return (
+    <Component formData={formData} setFormData={setFormData} item={item} />
+  );
 };
 
-const SingleLevel = ({ item }) => {
+const SingleLevel = ({ item, formData, setFormData }) => {
   const classes = useStyles();
+
+  // const close = () => {
+  //   setFormData({ ...formData, draweron: "yes" });
+  // };
+
   return (
     <>
       <ListItem
+        // onClick={close}
         button
         component={Link}
-        to={item.to || "/404"}
+        to={item.to || "/home"}
         className={classes.buttons}
       >
         <ListItemIcon
@@ -62,18 +77,21 @@ const SingleLevel = ({ item }) => {
         <ListItemText primary={item.title} />
         <Divider />
       </ListItem>
-     
     </>
   );
 };
 
-const MultiLevel = ({ item }) => {
+const MultiLevel = ({ item, formData, setFormData }) => {
   const classes = useStyles();
   const { items: children } = item;
-  const [open, setOpen] = useState(false);
+  const [openlist, setOpenlist] = useState(false);
 
   const handleClick = () => {
-    setOpen((prev) => !prev);
+    setOpenlist((prev) => !prev);
+  };
+
+  const handleclickclose = () => {
+    setFormData({ ...formData, draweron: "yes" });
   };
 
   return (
@@ -94,7 +112,7 @@ const MultiLevel = ({ item }) => {
             style={{ fontFamily: "Open Sans" }}
             primary={item.title}
           />
-          {open ? (
+          {openlist ? (
             <ExpandLessIcon
               style={{ color: "rgb(238, 238, 238)", opacity: "0.5" }}
             />
@@ -104,14 +122,14 @@ const MultiLevel = ({ item }) => {
             />
           )}
         </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={openlist} timeout="auto" unmountOnExit>
           <List
             component="div"
             disablePadding
             className={classes.secondarytext}
           >
             {children.map((child, key) => (
-              <MenuItem key={key} item={child} />
+              <MenuItem  key={key} item={child} />
             ))}
           </List>
         </Collapse>

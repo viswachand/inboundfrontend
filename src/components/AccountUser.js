@@ -1,23 +1,3 @@
-// import { TextField } from "@mui/material";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import React from "react";
-
-// const theme = createTheme();
-
-// function EquipmentSelection() {
-//   return (
-//     <div>
-//       <ThemeProvider theme={theme}>
-//         <form noValidate sx={{ mt: 1 }}>
-//           <TextField margin="normal" required fullWidth />
-//         </form>
-//       </ThemeProvider>
-//     </div>
-//   );
-// }
-
-// export default EquipmentSelection;
-
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -34,7 +14,6 @@ const theme = createTheme();
 
 const StyledMenu = styled((props) => (
   <Menu
-   
     anchorOrigin={{
       vertical: "bottom",
       horizontal: "right",
@@ -78,28 +57,38 @@ const StyledMenu = styled((props) => (
 export default function CustomizedMenus() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [options, setoptions] = React.useState("");
+  const [personName, setPersonName] = React.useState([]);
+
   const open = Boolean(anchorEl);
 
   var data;
+
+  console.log(personName)
 
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.accountInfo);
 
-  const { loading, error, userInfo } = userLogin;
+  // const { loading, error, userInfo } = userLogin;
 
-  const [DemoData] = userLogin.AccountData || [];
+  // const [DemoData] = userLogin.AccountData || [];
 
-  const { E1USER, E1NAME, E1STOR, E1SSFX, E1BLDG, E1STAT } = DemoData || [];
+  // const { E1USER, E1NAME, E1STOR, E1SSFX, E1BLDG, E1STAT } = DemoData || [];
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     dispatch(AccountSelection());
   };
   const handleClose = () => {
-    dispatch(AccountUpdation());
+    // dispatch(AccountUpdation());
     // document.location.href = "/home";
+    console.log("work");
     setAnchorEl(null);
+  };
+
+  const onTargetIdentityChange = (event) => {
+    setPersonName(event.target.value);
+    setAnchorEl(null); // its undefined always
   };
 
   return (
@@ -110,7 +99,7 @@ export default function CustomizedMenus() {
           margin="normal"
           required
           fullWidth
-          value={options}
+          value={personName}
           label="Account Selection"
           autoComplete="Equipment Selection"
           autoFocus
@@ -118,11 +107,10 @@ export default function CustomizedMenus() {
           aria-controls="demo-customized-menu"
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
           // endIcon={<ArrowDropDownIcon />}
           InputProps={{
             endAdornment: (
-              <Button>
+              <Button onClick={handleClick}>
                 <InputAdornment position="end">
                   <ArrowDropDownIcon />
                 </InputAdornment>
@@ -138,9 +126,13 @@ export default function CustomizedMenus() {
           anchorEl={anchorEl}
           open={open}
         >
-          <MenuItem onClick={handleClose} disableRipple>
-            {` ${E1NAME} --- store : ${E1STOR}`}
-          </MenuItem>
+          {userLogin.AccountData?.length > 0
+            ? userLogin.AccountData.map((item, key) => (
+                <MenuItem onClick={onTargetIdentityChange} disableRipple>
+                  {item.EOUSER}
+                </MenuItem>
+              ))
+            : " "}
         </StyledMenu>
       </ThemeProvider>
     </div>

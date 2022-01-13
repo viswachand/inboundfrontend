@@ -9,7 +9,8 @@ import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Options from "../components/optionsButton";
 import { useDispatch, useSelector } from "react-redux";
-import { Tally } from "../actions/inboundActions";
+import { Tally, Location, Save } from "../actions/inboundActions";
+import  Snackbar  from "../components/snackbar";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -30,44 +31,298 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InboundStaging() {
   const classes = useStyles();
-  const [tally, settally] = useState("");
+  const [tallyNumber, settally] = useState("");
   const [item, setitem] = useState("");
-  const [Qty, setQty] = useState("");
+  const [Quantity, setQty] = useState("");
+  const [Typ, setType] = useState("");
+  const [lot1, setLot] = useState("");
+  const [lot2, setLot2] = useState("");
+  const [lot3, setLot3] = useState("");
+  const [LotUnitWeight, setLotUnitWeight] = useState("");
+  const [InventoryType, setInventoryType] = useState("");
+  const [location, setLoc] = useState("");
   const [Open, setOpen] = useState(false);
+  const [LocOpen, setLocOpen] = useState(false);
+  const [Tallyerror, setTallyerror] = useState(false);
+  const [Itemerror, setItemerror] = useState(false);
+  const [Qtyerror, setQtyerror] = useState(false);
+  const [Loterror, setLoterror] = useState(false);
+  const [Locerror, setLocerror] = useState(false);
+  const [ErrorMsg,  setErrorMSG] = useState(false);
   const [values, setValues] = React.useState({
     name: "",
   });
 
+  console.log(Locerror);
+
   const dispatch = useDispatch();
 
-  const inboundData = useSelector((state) => state.inboundStaging);
 
-  const { TallyNumber } = inboundData;
 
-  const [data, demotally, ...demodata] = TallyNumber || [];
-
-  const { value: Name } = data ?? "";
-
-  console.log(Name);
-
-  const Submit = (event) => {
+  const TypSubmit = (event) => {
     if (event.keyCode === 13) {
-      dispatch(Tally(tally, item));
-      setOpen((prevOpen) => !prevOpen);
+      dispatch(
+        Tally(
+          tallyNumber,
+          item,
+          lot1,
+          lot2,
+          lot3,
+          LotUnitWeight,
+          Quantity,
+          InventoryType
+        )
+      ).then((resp) => {
+        const [ArrayData] = resp;
+
+        const { data } = ArrayData || {};
+
+
+        const [
+          username,
+          tallyNumbers,
+          itemNumber,
+          Lot1Num,
+          Lot2Num,
+          Lot3Num,
+          LUW,
+          QuantityNum,
+          InventoryNum,
+          errorMSG,
+          errorMSG2,
+        ] = data;
+
+        const { value: errorValue } = errorMSG2 || "";
+
+        if (errorValue == "Tally Not Found.") {
+          setTallyerror((prevOpen) => !prevOpen);
+        } else {
+          setTallyerror(false);
+        }
+
+        if (errorValue == "Item Not Valid.") {
+          setItemerror((prevOpen) => !prevOpen);
+        } else {
+          setItemerror(false);
+        }
+
+        if (errorValue == "Quantity Not Valid.") {
+          setQtyerror((prevOpen) => !prevOpen);
+        } else {
+          setQtyerror(false);
+        }
+
+        if (
+          errorValue !== "Quantity Not Valid." &&
+          errorValue !== "Item Not Valid." &&
+          errorValue !== "Tally Not Found."
+        ) {
+          setOpen((prevOpen) => !prevOpen);
+        }
+      });
     }
   };
 
+  const TypLot = (event) => {
+    if (event.keyCode === 13) {
+      dispatch(
+        Tally(
+          tallyNumber,
+          item,
+          lot1,
+          lot2,
+          lot3,
+          LotUnitWeight,
+          Quantity,
+          InventoryType
+        )
+      ).then((resp) => {
+        const [ArrayData] = resp;
+
+        const { data } = ArrayData || {};
+
+        const [
+          username,
+          tallyNumbers,
+          itemNumber,
+          Lot1Num,
+          Lot2Num,
+          Lot3Num,
+          LUW,
+          QuantityNum,
+          InventoryNum,
+          errorMSG,
+          errorMSG2,
+        ] = data;
+
+        const { value: errorValue } = errorMSG2 || "";
+
+
+        if (errorValue === "Lot Not Valid.") {
+          setLoterror((prevOpen) => !prevOpen);
+        } else {
+          setLoterror(false);
+        }
+
+        if (
+          errorValue !== "Quantity Not Valid." &&
+          errorValue !== "Item Not Valid." &&
+          errorValue !== "Tally Not Found." &&
+          errorValue !== "Lot Not Valid."
+        ) {
+          setLocOpen((prevOpen) => !prevOpen);
+        }
+      });
+    }
+  };
+
+  const TypLoc = (event) => {
+    dispatch(Location(tallyNumber, location)).then((resp) => {
+      const [ArrayData] = resp;
+
+      const { data } = ArrayData || {};
+
+      const [username, tallyNumbers, itemNumber, errorMSG, errorMSG2] = data;
+
+      const { value: errorValue } = errorMSG2 || "";
+
+     
+
+      if (errorValue === "Location Not Valid.") {
+        setLocerror((prevOpen) => !prevOpen);
+      } else {
+        setLocerror(false);
+      }
+
+      if (errorValue !== "Location Not Valid.") {
+        dispatch(
+          Save(
+            tallyNumber,
+            item,
+            lot1,
+            lot2,
+            lot3,
+            location,
+            LotUnitWeight,
+            Quantity,
+            InventoryType
+          )
+        ).then((resp) => {
+          const [ArrayData] = resp;
+  
+          const { data } = ArrayData || {};
+  
+          const [
+            username,
+            tallyNumbers,
+            itemNumber,
+            Lot1Num,
+            Lot2Num,
+            Lot3Num,
+            LUW,
+            QuantityNum,
+            InventoryNum,
+            errorMSG,
+            errorMSG2,
+          ] = data;
+  
+          const { value: errorValue } = errorMSG2 || "";
+
+          console.log(errorValue)
+  
+  
+          if (errorValue !== "Location Not Valid.") {
+            setErrorMSG((prevOpen) => !prevOpen);
+          } else {
+            setErrorMSG(false);
+          }
+  
+        });
+      }
+
+
+    });
+  };
+
   return (
-    <div>
-      <Box sx={{ pt: "4em" }}>
-        <Grid container>
-          <Grid item md={4}></Grid>
-          <Grid item md={3}>
-            <Card>
-              <CardHeader title="Inbound 1 - Step" className={classes.title} />
-              <CardContent>
-                <div>
-                  <form onKeyDown={(e) => Submit(e)}>
+    <Box sx={{ pt: "4em" }}>
+      <Grid container>
+        <Grid item md={5}></Grid>
+        <Grid item md={3}>
+          <Card>
+            <CardHeader title="Inbound 1 Step" className={classes.title} />
+            <CardContent>
+              <div>
+                <form onKeyUp={TypSubmit}>
+                  <Grid
+                    container
+                    spacing={1}
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        fullWidth
+                        focused={false}
+                        variant="standard"
+                        label="TallyNumber:"
+                        error={Tallyerror}
+                        helperText={
+                          Tallyerror ? "Tally Number not available" : ""
+                        }
+                        onChange={(e) => settally(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        focused={false}
+                        variant="standard"
+                        label="Item:"
+                        error={Itemerror}
+                        helperText={
+                          Itemerror ? "Item Number not available" : ""
+                        }
+                        onChange={(e) => setitem(e.target.value)}
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid
+                    container
+                    spacing={3}
+                    sx={{ p: "8px" }}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        style={{ width: "9rem" }}
+                        focused={false}
+                        variant="standard"
+                        error={Qtyerror}
+                        helperText={Qtyerror ? "Enter Quantity" : ""}
+                        label="Quantity:"
+                        onChange={(e) => setQty(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        style={{ width: "3rem" }}
+                        focused={false}
+                        variant="standard"
+                        label="Type:"
+                        onChange={(e) => setType(e.target.value)}
+                      />
+                    </Grid>
+                  </Grid>
+                </form>
+              </div>
+
+              <div>
+                <form onKeyUp={TypLot}>
+                  {Open ? (
                     <Grid
                       container
                       spacing={1}
@@ -77,104 +332,72 @@ export default function InboundStaging() {
                     >
                       <Grid item>
                         <TextField
-                          fullWidth
                           focused={false}
                           variant="standard"
-                          label="TallyNumber:"
-                          // error
-                          // helperText = "Tally Number not available"
-                          onChange={(e) => settally(e.target.value)}
+                          label="Lot:"
+                          error={Loterror}
+                          helperText={Loterror ? "Lot Not Valid." : ""}
+                          onChange={(e) => setLot(e.target.value)}
                         />
                       </Grid>
                       <Grid item>
                         <TextField
-                          focused={false}
+                          onChange={(e) => setLot2(e.target.value)}
+                          error={Loterror}
                           variant="standard"
-                          label="Item:"
-                          onChange={(e) => setitem(e.target.value)}
+                        />
+                      </Grid>
+                      <Grid item>
+                        <TextField
+                          onChange={(e) => setLot3(e.target.value)}
+                          error={Loterror}
+                          variant="standard"
                         />
                       </Grid>
                     </Grid>
+                  ) : (
+                    ""
+                  )}
+                </form>
+              </div>
 
-                    <Grid
-                      container
-                      spacing={3}
-                      sx={{ p: "8px" }}
-                      direction="row"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          style={{ width: "9rem" }}
-                          focused={false}
-                          variant="standard"
-                          label="Quantity:"
-                          onChange={(e) => setQty(e.target.value)}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          style={{ width: "3rem" }}
-                          focused={false}
-                          variant="standard"
-                          label="Type:"
-                        />
-                      </Grid>
+              <div style={{ marginTop: "9px", marginBottom: "9px" }}>
+                {LocOpen ? (
+                  <Grid
+                    container
+                    spacing={1}
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        focused={false}
+                        variant="standard"
+                        error={Locerror}
+                        helperText={Locerror ? "Location Not Valid" : ""}
+                        label="Location:"
+                        onChange={(e) => setLoc(e.target.value)}
+                        onKeyDown={() => TypLoc()}
+                      />
                     </Grid>
+                  </Grid>
+                ) : (
+                  ""
+                )}
+              </div>
 
-                    {TallyNumber !== "Tally Not Found." &&
-                    TallyNumber !== "Item Not Valid." &&
-                    Open ? (
-                      <Grid
-                        container
-                        spacing={1}
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Grid item>
-                          <TextField
-                            focused={false}
-                            variant="standard"
-                            label="Lot:"
-                          />
-                        </Grid>
-                        <Grid item>
-                          <TextField focused={false} variant="standard" />
-                        </Grid>
-                        <Grid item>
-                          <TextField focused={false} variant="standard" />
-                        </Grid>
-                        <Grid item>
-                          <TextField
-                            focused={false}
-                            variant="standard"
-                            label="Location:"
-                          />
-                        </Grid>
-                        <br />
-                        <CardActions className={classes.options}>
-                          <Options />
+              <Snackbar ErrorMsg = {ErrorMsg}></Snackbar>
 
-                          <br />
-                        </CardActions>
-                      </Grid>
-                    ) : (
-                      <CardActions className={classes.options}>
-                        <Options />
-
-                        <br />
-                      </CardActions>
-                    )}
-                  </form>
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item md={4}></Grid>
+              <CardActions className={classes.options}>
+                <Options />
+                <br />
+              </CardActions>
+            </CardContent>
+          </Card>
         </Grid>
-      </Box>
-    </div>
+        <Grid item md={4}></Grid>
+      </Grid>
+    </Box>
   );
 }

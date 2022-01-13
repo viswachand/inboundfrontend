@@ -9,6 +9,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AccountSelection, AccountUpdation } from "../actions/AccountActions";
+import { USER_LOGIN_REQUEST } from "../constants/userConstants";
 
 const theme = createTheme();
 
@@ -58,9 +59,8 @@ const StyledMenu = styled((props) => (
 export default function CustomizedMenus() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [options, setoptions] = React.useState("");
+  const [personName, setPersonName] = React.useState([]);
   const open = Boolean(anchorEl);
-
-  var data;
 
   const dispatch = useDispatch();
 
@@ -68,9 +68,20 @@ export default function CustomizedMenus() {
 
   const { loading, error, userInfo } = userLogin;
 
-  const [DemoData] = userLogin.AccountData || [];
 
-  const { E1USER, E1NAME, E1STOR, E1SSFX, E1BLDG, E1STAT } = DemoData || [];
+  console.log(personName)
+
+  // const Arraydata = userLogin.AccountData ;
+
+  // var Arraydata = [];
+
+  // Arraydata.push(userLogin && userLogin.AccountData);
+
+  // console.log(Arraydata);
+
+  // const { E1USER, E1NAME, E1STOR, E1SSFX, E1BLDG, E1STAT } = DemoData || [];
+
+  // console.log(DemoData);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -78,8 +89,13 @@ export default function CustomizedMenus() {
   };
   const handleClose = () => {
     dispatch(AccountUpdation());
-    // document.location.href = "/home";
+
     setAnchorEl(null);
+  };
+
+  const onTargetIdentityChange = (event) => {
+    setPersonName(event.target.value); // its undefined always
+    console.log("work")
   };
 
   return (
@@ -91,7 +107,7 @@ export default function CustomizedMenus() {
             margin="normal"
             required
             fullWidth
-            value={options}
+            value={personName}
             label="Equipment Selection"
             autoComplete="Equipment Selection"
             autoFocus
@@ -103,7 +119,7 @@ export default function CustomizedMenus() {
             // endIcon={<ArrowDropDownIcon />}
             InputProps={{
               endAdornment: (
-                <Button>
+                <Button  onClick={handleClose}>
                   <InputAdornment position="end">
                     <ArrowDropDownIcon />
                   </InputAdornment>
@@ -118,10 +134,19 @@ export default function CustomizedMenus() {
             }}
             anchorEl={anchorEl}
             open={open}
+            onChange={onTargetIdentityChange}
+            value={personName}
           >
-            <MenuItem onClick={handleClose} disableRipple>
-              {` ${E1NAME} --- store : ${E1STOR}`}
-            </MenuItem>
+            {userLogin.AccountData?.length > 0
+              ? userLogin.AccountData.map((item, key) => (
+                  <MenuItem   
+                    
+                    disableRipple
+                  >
+                    {item.E1NAME}
+                  </MenuItem>
+                ))
+              : " "}
           </StyledMenu>
         </form>
       </ThemeProvider>

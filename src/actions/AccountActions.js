@@ -21,7 +21,7 @@ export const AccountSelection = () => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      "/api/account/checkUser",
+      "/api/account/AccountUser",
 
       config
     );

@@ -11,39 +11,61 @@ import {
   INBOUND_SAVE_FAIL,
 } from "../constants/inboundConstants";
 
-export const Tally = (tallyNumber, item, lot1, lot2, lot3, LotUnitWeight, Quantity, InventoryType) => async (dispatch) => {
-  try {
-    dispatch({
-      type: INBOUND_TALLY_REQUEST,
-    });
+export const Tally =
+  (
+    tallyNumber,
+    item,
+    lot1,
+    lot2,
+    lot3,
+    LotUnitWeight,
+    Quantity,
+    InventoryType
+  ) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: INBOUND_TALLY_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    const { data } = await axios.post(
-      "/api/receiving/item",
-      { tallyNumber, item, lot1, lot2, lot3, LotUnitWeight, Quantity, InventoryType },
-      config
-    );
+      const { data } = await axios.post(
+        "/api/receiving/item",
+        {
+          tallyNumber,
+          item,
+          lot1,
+          lot2,
+          lot3,
+          LotUnitWeight,
+          Quantity,
+          InventoryType,
+        },
+        config
+      );
 
-    dispatch({
-      type: INBOUND_TALLY_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: INBOUND_TALLY_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
-export const Location = (tallyNumber,locations) => async (dispatch) => {
+      dispatch({
+        type: INBOUND_TALLY_SUCCESS,
+        payload: data,
+      });
+
+      return data;
+    } catch (error) {
+      dispatch({
+        type: INBOUND_TALLY_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+export const Location = (tallyNumber, locations) => async (dispatch) => {
   try {
     dispatch({
       type: INBOUND_LOCATION_REQUEST,
@@ -57,7 +79,7 @@ export const Location = (tallyNumber,locations) => async (dispatch) => {
 
     const { data } = await axios.post(
       "/api/receiving/location",
-      { tallyNumber,locations},
+      { tallyNumber, locations },
       config
     );
 
@@ -65,6 +87,8 @@ export const Location = (tallyNumber,locations) => async (dispatch) => {
       type: INBOUND_LOCATION_SUCCESS,
       payload: data,
     });
+
+    return data;
   } catch (error) {
     dispatch({
       type: INBOUND_LOCATION_FAIL,
@@ -76,36 +100,59 @@ export const Location = (tallyNumber,locations) => async (dispatch) => {
   }
 };
 
+export const Save =
+  (
+    tallyNumber,
+          item,
+          lot1,
+          lot2,
+          lot3,
+          location,
+          LotUnitWeight,
+          Quantity,
+          InventoryType
+  ) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: INBOUND_SAVE_REQUEST,
+      });
 
-export const Save = (tallyNumber, item, lot1, lot2, lot3, LotUnitWeight, Quantity,Loc, InventoryType) => async (dispatch) => {
-  try {
-    dispatch({
-      type: INBOUND_SAVE_REQUEST,
-    });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+      const { data } = await axios.post(
+        "/api/receiving/data",
+        {
+          tallyNumber,
+          item,
+          lot1,
+          lot2,
+          lot3,
+          location,
+          LotUnitWeight,
+          Quantity,
+          InventoryType
+        },
+        config
+      );
 
-    const { data } = await axios.post(
-      "/api/receiving/data",
-      { tallyNumber, item, lot1, lot2, lot3, LotUnitWeight, Quantity,Loc, InventoryType },
-      config
-    );
+      dispatch({
+        type: INBOUND_SAVE_SUCCESS,
+        payload: data,
+      });
 
-    dispatch({
-      type: INBOUND_SAVE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: INBOUND_SAVE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      return data;
+    } catch (error) {
+      dispatch({
+        type: INBOUND_SAVE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

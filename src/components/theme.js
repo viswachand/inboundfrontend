@@ -3,7 +3,6 @@ import { createTheme } from "@mui/material/styles";
 const primary = "#2F407B";
 const secondary = "#2F407B";
 
-
 export default createTheme({
   shadows: Array(25).fill("none"),
 
@@ -52,7 +51,7 @@ export default createTheme({
         input: {
           height: "1rem",
           font: "revert",
-          width:"13rem"
+          width: "13rem",
         },
       },
     },
@@ -67,24 +66,28 @@ export default createTheme({
         shrink: {
           transform: "none",
         },
-      
       },
     },
 
-    MuiFormLabel: {
+    MuiSnackbar: {
       styleOverrides: {
         root: {
-          color:"#3C4953",
-          fontFamily: "Open Sans",
-          fontWeight:"500",
-          fontSize: "14px",
-          paddingBottom:"10px",
-          lineHeight:"10px"
+          position:"initial",
         },
       },
     },
-
-   
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: "#3C4953",
+          fontFamily: "Open Sans",
+          fontWeight: "500",
+          fontSize: "14px",
+          paddingBottom: "10px",
+          lineHeight: "10px",
+        },
+      },
+    },
 
     MuiInput: {
       styleOverrides: {

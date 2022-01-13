@@ -9,7 +9,8 @@ import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Options from "../components/optionsButton";
 import { useDispatch, useSelector } from "react-redux";
-import { Tally, Location } from "../actions/inboundActions";
+import { Tally, Location, Save } from "../actions/inboundActions";
+import  Snackbar  from "../components/snackbar";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -42,47 +43,21 @@ export default function InboundStaging() {
   const [location, setLoc] = useState("");
   const [Open, setOpen] = useState(false);
   const [LocOpen, setLocOpen] = useState(false);
+  const [Tallyerror, setTallyerror] = useState(false);
+  const [Itemerror, setItemerror] = useState(false);
+  const [Qtyerror, setQtyerror] = useState(false);
+  const [Loterror, setLoterror] = useState(false);
+  const [Locerror, setLocerror] = useState(false);
+  const [ErrorMsg,  setErrorMSG] = useState(false);
   const [values, setValues] = React.useState({
     name: "",
   });
 
+  console.log(Locerror);
+
   const dispatch = useDispatch();
 
-  const inboundData = useSelector((state) => state.inboundStaging);
 
-  const { TallyNumber } = inboundData;
-
-  const [ArrayData] = TallyNumber || [];
-
-  const { data } = ArrayData ?? "";
-
-  const [
-    username,
-    tallyNumbers,
-    itemNumber,
-    Lot1Num,
-    Lot2Num,
-    Lot3Num,
-    LUW,
-    QuantityNum,
-    InventoryNum,
-    errorMSG,
-    errorMSG2,
-  ] = data || [];
-
-  console.log(
-    username,
-    tallyNumbers,
-    itemNumber,
-    Lot1Num,
-    Lot2Num,
-    Lot3Num,
-    LUW,
-    QuantityNum,
-    InventoryNum,
-    errorMSG,
-    errorMSG2
-  );
 
   const TypSubmit = (event) => {
     if (event.keyCode === 13) {
@@ -97,10 +72,57 @@ export default function InboundStaging() {
           Quantity,
           InventoryType
         )
-      );
-      setOpen((prevOpen) => !prevOpen);
+      ).then((resp) => {
+        const [ArrayData] = resp;
+
+        const { data } = ArrayData || {};
+
+
+        const [
+          username,
+          tallyNumbers,
+          itemNumber,
+          Lot1Num,
+          Lot2Num,
+          Lot3Num,
+          LUW,
+          QuantityNum,
+          InventoryNum,
+          errorMSG,
+          errorMSG2,
+        ] = data;
+
+        const { value: errorValue } = errorMSG2 || "";
+
+        if (errorValue == "Tally Not Found.") {
+          setTallyerror((prevOpen) => !prevOpen);
+        } else {
+          setTallyerror(false);
+        }
+
+        if (errorValue == "Item Not Valid.") {
+          setItemerror((prevOpen) => !prevOpen);
+        } else {
+          setItemerror(false);
+        }
+
+        if (errorValue == "Quantity Not Valid.") {
+          setQtyerror((prevOpen) => !prevOpen);
+        } else {
+          setQtyerror(false);
+        }
+
+        if (
+          errorValue !== "Quantity Not Valid." &&
+          errorValue !== "Item Not Valid." &&
+          errorValue !== "Tally Not Found."
+        ) {
+          setOpen((prevOpen) => !prevOpen);
+        }
+      });
     }
   };
+
   const TypLot = (event) => {
     if (event.keyCode === 13) {
       dispatch(
@@ -114,30 +136,123 @@ export default function InboundStaging() {
           Quantity,
           InventoryType
         )
-      );
-      setLocOpen((prevOpen) => !prevOpen);
+      ).then((resp) => {
+        const [ArrayData] = resp;
+
+        const { data } = ArrayData || {};
+
+        const [
+          username,
+          tallyNumbers,
+          itemNumber,
+          Lot1Num,
+          Lot2Num,
+          Lot3Num,
+          LUW,
+          QuantityNum,
+          InventoryNum,
+          errorMSG,
+          errorMSG2,
+        ] = data;
+
+        const { value: errorValue } = errorMSG2 || "";
+
+
+        if (errorValue === "Lot Not Valid.") {
+          setLoterror((prevOpen) => !prevOpen);
+        } else {
+          setLoterror(false);
+        }
+
+        if (
+          errorValue !== "Quantity Not Valid." &&
+          errorValue !== "Item Not Valid." &&
+          errorValue !== "Tally Not Found." &&
+          errorValue !== "Lot Not Valid."
+        ) {
+          setLocOpen((prevOpen) => !prevOpen);
+        }
+      });
     }
   };
+
   const TypLoc = (event) => {
-    // event.preventDefault();
-    // event.stopPropagation();
+    dispatch(Location(tallyNumber, location)).then((resp) => {
+      const [ArrayData] = resp;
 
-    dispatch(Location(tallyNumber, location));
+      const { data } = ArrayData || {};
+
+      const [username, tallyNumbers, itemNumber, errorMSG, errorMSG2] = data;
+
+      const { value: errorValue } = errorMSG2 || "";
+
+     
+
+      if (errorValue === "Location Not Valid.") {
+        setLocerror((prevOpen) => !prevOpen);
+      } else {
+        setLocerror(false);
+      }
+
+      if (errorValue !== "Location Not Valid.") {
+        dispatch(
+          Save(
+            tallyNumber,
+            item,
+            lot1,
+            lot2,
+            lot3,
+            location,
+            LotUnitWeight,
+            Quantity,
+            InventoryType
+          )
+        ).then((resp) => {
+          const [ArrayData] = resp;
+  
+          const { data } = ArrayData || {};
+  
+          const [
+            username,
+            tallyNumbers,
+            itemNumber,
+            Lot1Num,
+            Lot2Num,
+            Lot3Num,
+            LUW,
+            QuantityNum,
+            InventoryNum,
+            errorMSG,
+            errorMSG2,
+          ] = data;
+  
+          const { value: errorValue } = errorMSG2 || "";
+
+          console.log(errorValue)
+  
+  
+          if (errorValue !== "Location Not Valid.") {
+            setErrorMSG((prevOpen) => !prevOpen);
+          } else {
+            setErrorMSG(false);
+          }
+  
+        });
+      }
+
+
+    });
   };
-
-  const { value: errorValue, type } = errorMSG2 || "";
-
-  console.log(errorValue);
 
   return (
     <Box sx={{ pt: "4em" }}>
       <Grid container>
-        <Grid item md={4}></Grid>
+        <Grid item md={5}></Grid>
         <Grid item md={3}>
           <Card>
             <CardHeader title="Inbound Staging" className={classes.title} />
             <CardContent>
-              <div id="tallyNumber">
+              <div>
                 <form onKeyUp={TypSubmit}>
                   <Grid
                     container
@@ -152,11 +267,9 @@ export default function InboundStaging() {
                         focused={false}
                         variant="standard"
                         label="TallyNumber:"
-                        error={errorValue == "Tally Not Found."}
+                        error={Tallyerror}
                         helperText={
-                          errorValue == "Tally Not Found."
-                            ? "Tally Number not available"
-                            : ""
+                          Tallyerror ? "Tally Number not available" : ""
                         }
                         onChange={(e) => settally(e.target.value)}
                       />
@@ -166,11 +279,9 @@ export default function InboundStaging() {
                         focused={false}
                         variant="standard"
                         label="Item:"
-                        error={errorValue == "Item Not Valid."}
+                        error={Itemerror}
                         helperText={
-                          errorValue == "Item Not Valid."
-                            ? "Item Number not available"
-                            : ""
+                          Itemerror ? "Item Number not available" : ""
                         }
                         onChange={(e) => setitem(e.target.value)}
                       />
@@ -190,12 +301,8 @@ export default function InboundStaging() {
                         style={{ width: "9rem" }}
                         focused={false}
                         variant="standard"
-                        error={errorValue == "Quantity Not Valid."}
-                        helperText={
-                          errorValue == "Quantity Not Valid."
-                            ? "Enter Quantity"
-                            : ""
-                        }
+                        error={Qtyerror}
+                        helperText={Qtyerror ? "Enter Quantity" : ""}
                         label="Quantity:"
                         onChange={(e) => setQty(e.target.value)}
                       />
@@ -213,12 +320,9 @@ export default function InboundStaging() {
                 </form>
               </div>
 
-              <div id="lot">
+              <div>
                 <form onKeyUp={TypLot}>
-                  {errorValue !== "Quantity Not Valid." &&
-                  errorValue !== "Item Not Valid." &&
-                  errorValue !== "Tally Not Found." &&
-                  Open ? (
+                  {Open ? (
                     <Grid
                       container
                       spacing={1}
@@ -231,26 +335,22 @@ export default function InboundStaging() {
                           focused={false}
                           variant="standard"
                           label="Lot:"
-                          error={errorValue == "Lot Not Valid."}
-                          helperText={
-                            errorValue == "Lot Not Valid."
-                              ? "Enter The Lot Number"
-                              : ""
-                          }
+                          error={Loterror}
+                          helperText={Loterror ? "Lot Not Valid." : ""}
                           onChange={(e) => setLot(e.target.value)}
                         />
                       </Grid>
                       <Grid item>
                         <TextField
                           onChange={(e) => setLot2(e.target.value)}
-                          error
+                          error={Loterror}
                           variant="standard"
                         />
                       </Grid>
                       <Grid item>
                         <TextField
                           onChange={(e) => setLot3(e.target.value)}
-                          error
+                          error={Loterror}
                           variant="standard"
                         />
                       </Grid>
@@ -261,30 +361,33 @@ export default function InboundStaging() {
                 </form>
               </div>
 
-              <div id="location" style={{ marginTop: "9px" }}>
-                <form onClick={TypLoc}>
-                  {errorValue !== "Lot Not Valid." && LocOpen ? (
-                    <Grid
-                      container
-                      spacing={1}
-                      direction="column"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          focused={false}
-                          variant="standard"
-                          label="Location:"
-                          onChange={(e) => setLoc(e.target.value)}
-                        />
-                      </Grid>
+              <div style={{ marginTop: "9px", marginBottom: "9px" }}>
+                {LocOpen ? (
+                  <Grid
+                    container
+                    spacing={1}
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        focused={false}
+                        variant="standard"
+                        error={Locerror}
+                        helperText={Locerror ? "Location Not Valid" : ""}
+                        label="Location:"
+                        onChange={(e) => setLoc(e.target.value)}
+                        onKeyDown={() => TypLoc()}
+                      />
                     </Grid>
-                  ) : (
-                    ""
-                  )}
-                </form>
+                  </Grid>
+                ) : (
+                  ""
+                )}
               </div>
+
+              <Snackbar ErrorMsg = {ErrorMsg}></Snackbar>
 
               <CardActions className={classes.options}>
                 <Options />
