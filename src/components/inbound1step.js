@@ -73,7 +73,7 @@ export default function InboundStaging() {
           InventoryType
         )
       ).then((resp) => {
-        const [ArrayData] = resp;
+        const [ArrayData] = resp || [];
 
         const { data } = ArrayData || {};
 
@@ -247,10 +247,10 @@ export default function InboundStaging() {
   return (
     <Box sx={{ pt: "4em" }}>
       <Grid container>
-        <Grid item md={5}></Grid>
-        <Grid item md={3}>
+        <Grid item md={4} sm={3} xs={1}></Grid>
+        <Grid item md={3} sm = {7} xs = {10}>
           <Card>
-            <CardHeader title="Inbound 1 Step" className={classes.title} />
+            <CardHeader title="Inbound 1 - Step" className={classes.title} />
             <CardContent>
               <div>
                 <form onKeyUp={TypSubmit}>
@@ -396,7 +396,7 @@ export default function InboundStaging() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item md={4}></Grid>
+        <Grid item md={4} sm = {2} xs={1}></Grid>
       </Grid>
     </Box>
   );

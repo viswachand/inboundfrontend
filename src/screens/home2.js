@@ -1,14 +1,6 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { styled } from "@mui/material/styles";
-<<<<<<< HEAD
-import { useDispatch } from "react-redux";
-=======
-<<<<<<< HEAD
-import { useDispatch, useSelector } from "react-redux";
-=======
 import { useDispatch} from "react-redux";
->>>>>>> vineeth
->>>>>>> 8ef3d86760e3ceee90c48ef82c27fc5159637473
 import { Route } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
@@ -31,7 +23,6 @@ import Popper from "@mui/core/Popper";
 import InboundStaging from "../components/InboundStaging";
 import Inbound1step from "../components/inbound1step";
 import { useSelector } from "react-redux";
-import { createTheme } from "@mui/material/styles";
 
 import {
   Grow,
@@ -39,11 +30,10 @@ import {
   MenuItem,
   Paper,
   ClickAwayListener,
-  useMediaQuery,
 } from "@mui/material";
 import Companylogo from "../assests/logo.svg";
 
-const drawerWidth = 270;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -96,6 +86,10 @@ const AppBar = styled(MuiAppBar, {
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   }),
 }));
 
@@ -110,25 +104,15 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
-<<<<<<< HEAD
-  const theme = createTheme();
-=======
-<<<<<<< HEAD
-=======
 
->>>>>>> vineeth
->>>>>>> 8ef3d86760e3ceee90c48ef82c27fc5159637473
   const [open, setOpen] = React.useState(false);
-  const [formData, setFormData] = useState({
-    draweron: "",
-  });
-
-  console.log(formData.draweron);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
-  const mediaquary = useMediaQuery(theme.breakpoints.down("md"));
+  
+
+  // const mediaquary = useMediaQuery(theme.breakpoints.down("xs"));
 
   const [openuser, setOpenuser] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -151,6 +135,10 @@ export default function PersistentDrawerLeft() {
     }
   }
 
+
+
+  
+
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
@@ -161,14 +149,7 @@ export default function PersistentDrawerLeft() {
     setOpen(true);
   };
 
-<<<<<<< HEAD
-  
-=======
-<<<<<<< HEAD
-=======
 
->>>>>>> vineeth
->>>>>>> 8ef3d86760e3ceee90c48ef82c27fc5159637473
   return (
     <React.Fragment>
       <CssBaseline />
@@ -244,12 +225,7 @@ export default function PersistentDrawerLeft() {
                         id="menu-list-grow"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem
-                          style={{ color: "black" }}
-                          onClick={logoutHandler}
-                        >
-                          Logout
-                        </MenuItem>
+                        <MenuItem style={{color: "black"}} onClick={logoutHandler}>Logout</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
@@ -271,22 +247,18 @@ export default function PersistentDrawerLeft() {
           }}
           variant="persistent"
           anchor="left"
-          open={mediaquary ? open : true}
+          open={open}
         >
           <DrawerHeader>
             <img src={Companylogo} alt="Companylogo"></img>
           </DrawerHeader>
           <Divider />
           <Typography variant="h6">WDLS Dashboard</Typography>
-          <Menubar formData={formData} setFormData={setFormData} />
+          <Menubar />
         </Drawer>
         <Main open={open}>
           <Route exact path="/home/InboundStaging" component={InboundStaging} />
-          <Route
-            exact
-            path="/home/InboundInbound1step"
-            component={Inbound1step}
-          />
+          <Route exact path="/home/InboundInbound1step" component={Inbound1step} />
         </Main>
       </Box>
     </React.Fragment>

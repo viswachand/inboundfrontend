@@ -33,10 +33,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-<<<<<<< HEAD
-=======
 
->>>>>>> vineeth
 export default function BadgeAvatars() {
   return (
     <Stack direction="row" spacing={2}>

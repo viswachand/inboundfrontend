@@ -40,11 +40,11 @@ function Form() {
   const { loading, error, userInfo } = userLogin;
 
   const submitHandler = () => {
-    // dispatch(login(formData.username, formData.password)).then((resp) => {
-    //   if (resp === formData.username) {
+    dispatch(login(formData.username, formData.password)).then((resp) => {
+      if (resp === formData.username) {
         setPage((currPage) => currPage + 1);
-    //   }
-    // });
+      }
+    });
   };
 
   const ac = () => {
