@@ -87,7 +87,7 @@ export default function CustomizedMenus() {
   };
 
   const onTargetIdentityChange = (event) => {
-    setPersonName(event.target.value);
+    
     setAnchorEl(null); // its undefined always
   };
 

@@ -64,11 +64,11 @@ export default function CustomizedMenus() {
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.accountInfo);
+  const EquipmentData = useSelector((state) => state.Equipmentselection);
 
-  const { loading, error, userInfo } = userLogin;
+  const { loading, error, userInfo } = EquipmentData.EquipmentData;
 
-  console.log(personName);
+  console.log(EquipmentData.EquipmentData);
 
   // const Arraydata = userLogin.AccountData ;
 
@@ -93,7 +93,8 @@ export default function CustomizedMenus() {
   };
 
   const onTargetIdentityChange = (event) => {
-    setPersonName(event.target.value); // its undefined always
+    
+    setAnchorEl(null); // its undefined always
   };
 
   return (
@@ -135,9 +136,9 @@ export default function CustomizedMenus() {
             onChange={onTargetIdentityChange}
             value={personName}
           >
-            {userLogin.AccountData?.length > 0
-              ? userLogin.AccountData.map((item, key) => (
-                  <MenuItem disableRipple>{item.E1NAME}</MenuItem>
+            {EquipmentData.EquipmentData?.length > 0
+              ? EquipmentData.EquipmentData.map((item, key) => (
+                  <MenuItem onClick={onTargetIdentityChange} disableRipple>{item.EQTYPE}</MenuItem>
                 ))
               : " "}
           </StyledMenu>

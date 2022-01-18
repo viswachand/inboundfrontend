@@ -74,7 +74,6 @@ export default function InboundStaging() {
         )
       ).then((resp) => {
 
-        console.log(resp)
         const [ArrayData] = resp || [];
 
         const { data } = ArrayData || {};
