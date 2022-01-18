@@ -9,7 +9,7 @@ import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Options from "../components/optionsButton";
 import { useDispatch, useSelector } from "react-redux";
-import { Tally, Location, Save } from "../actions/inboundActions";
+import { Tally, Location, Save } from "../actions/inbound1StepReceivingActions";
 import  Snackbar  from "../components/snackbar";
 
 const useStyles = makeStyles((theme) => ({
@@ -73,6 +73,8 @@ export default function InboundStaging() {
           InventoryType
         )
       ).then((resp) => {
+
+        console.log(resp)
         const [ArrayData] = resp || [];
 
         const { data } = ArrayData || {};

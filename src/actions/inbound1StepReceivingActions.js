@@ -49,6 +49,8 @@ export const Tally =
         config
       );
 
+      return data;
+
       dispatch({
         type: INBOUND_1STEP_RECEIVING_TALLY_SUCCESS,
         payload: data,
@@ -80,7 +82,7 @@ export const Location = (tallyNumber, locations) => async (dispatch) => {
       { tallyNumber, locations },
       config
     );
-
+    return data;
     dispatch({
       type: INBOUND_1STEP_RECEIVING_LOCATION_SUCCESS,
       payload: data,
@@ -135,6 +137,7 @@ export const Save =
         },
         config
       );
+      return data;
 
       dispatch({
         type: INBOUND_1STEP_RECEIVING_SAVE_SUCCESS,
