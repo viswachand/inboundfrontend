@@ -247,8 +247,8 @@ export default function InboundStaging() {
   return (
     <Box sx={{ pt: "4em" }}>
       <Grid container>
-        <Grid item md={4} sm={3} xs={1}></Grid>
-        <Grid item md={3} sm = {7} xs = {10}>
+        <Grid item md={5} sm={5} xs={1}></Grid>
+        <Grid item md={3} sm = {5} xs = {10}>
           <Card>
             <CardHeader title="Inbound 1 - Step" className={classes.title} />
             <CardContent>

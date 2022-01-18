@@ -52,14 +52,14 @@ const MenuItem = ({ item, formData, setFormData }) => {
 const SingleLevel = ({ item, formData, setFormData }) => {
   const classes = useStyles();
 
-  // const close = () => {
-  //   setFormData({ ...formData, draweron: "yes" });
-  // };
+  const close = () => {
+    setFormData(true);
+  };
 
   return (
     <>
       <ListItem
-        // onClick={close}
+        onClick={close}
         button
         component={Link}
         to={item.to || "/home"}
@@ -85,13 +85,10 @@ const MultiLevel = ({ item, formData, setFormData }) => {
   const classes = useStyles();
   const { items: children } = item;
   const [openlist, setOpenlist] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpenlist((prev) => !prev);
-  };
-
-  const handleclickclose = () => {
-    setFormData({ ...formData, draweron: "yes" });
   };
 
   return (
@@ -129,7 +126,12 @@ const MultiLevel = ({ item, formData, setFormData }) => {
             className={classes.secondarytext}
           >
             {children.map((child, key) => (
-              <MenuItem  key={key} item={child} />
+              <MenuItem
+                formData={formData}
+                setFormData={setFormData}
+                key={key}
+                item={child}
+              />
             ))}
           </List>
         </Collapse>

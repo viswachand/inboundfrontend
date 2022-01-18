@@ -68,8 +68,7 @@ export default function CustomizedMenus() {
 
   const { loading, error, userInfo } = userLogin;
 
-
-  console.log(personName)
+  console.log(personName);
 
   // const Arraydata = userLogin.AccountData ;
 
@@ -95,7 +94,6 @@ export default function CustomizedMenus() {
 
   const onTargetIdentityChange = (event) => {
     setPersonName(event.target.value); // its undefined always
-    console.log("work")
   };
 
   return (
@@ -119,7 +117,7 @@ export default function CustomizedMenus() {
             // endIcon={<ArrowDropDownIcon />}
             InputProps={{
               endAdornment: (
-                <Button  onClick={handleClose}>
+                <Button onClick={handleClose}>
                   <InputAdornment position="end">
                     <ArrowDropDownIcon />
                   </InputAdornment>
@@ -139,12 +137,7 @@ export default function CustomizedMenus() {
           >
             {userLogin.AccountData?.length > 0
               ? userLogin.AccountData.map((item, key) => (
-                  <MenuItem   
-                    
-                    disableRipple
-                  >
-                    {item.E1NAME}
-                  </MenuItem>
+                  <MenuItem disableRipple>{item.E1NAME}</MenuItem>
                 ))
               : " "}
           </StyledMenu>

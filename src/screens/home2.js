@@ -1,6 +1,6 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
@@ -23,6 +23,8 @@ import Popper from "@mui/core/Popper";
 import InboundStaging from "../components/InboundStaging";
 import Inbound1step from "../components/inbound1step";
 import { useSelector } from "react-redux";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import {
   Grow,
@@ -83,14 +85,6 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -104,15 +98,14 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
-
+  const theme = useTheme();
+  const [formData, setFormData] = useState(false);
   const [open, setOpen] = React.useState(false);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
-  
-
-  // const mediaquary = useMediaQuery(theme.breakpoints.down("xs"));
+  const mediaquary = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [openuser, setOpenuser] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -135,10 +128,6 @@ export default function PersistentDrawerLeft() {
     }
   }
 
-
-
-  
-
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
@@ -148,7 +137,6 @@ export default function PersistentDrawerLeft() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
 
   return (
     <React.Fragment>
@@ -162,7 +150,11 @@ export default function PersistentDrawerLeft() {
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
-              sx={{ mr: 2, ...(open && { display: "none" }), color: "#4B5861" }}
+              sx={{
+                mr: 2,
+                ...(open && { display: "none" }),
+                color: "#4B5861",
+              }}
             >
               <MenuIcon fontSize="large" />
             </IconButton>
@@ -225,7 +217,12 @@ export default function PersistentDrawerLeft() {
                         id="menu-list-grow"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem style={{color: "black"}} onClick={logoutHandler}>Logout</MenuItem>
+                        <MenuItem
+                          style={{ color: "black" }}
+                          onClick={logoutHandler}
+                        >
+                          Logout
+                        </MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
@@ -234,31 +231,41 @@ export default function PersistentDrawerLeft() {
             </Popper>
           </Toolbar>
         </AppBar>
+
         <Drawer
           sx={{
-            width: drawerWidth,
+            width: "250px",
             flexShrink: 0,
             "& .MuiDrawer-paper": {
+              [theme.breakpoints.down("sm")]: {
+                width: "180px",
+              },
               width: drawerWidth,
               backgroundColor: " #1C2B57",
-              // backgroundColor: "#2f4d7b",
+              [theme.breakpoints.down("sm")]: {
+                top: "6px",
+              },
               borderRight: "none",
             },
           }}
           variant="persistent"
           anchor="left"
-          open={open}
+          open={mediaquary ? open : true}
         >
           <DrawerHeader>
             <img src={Companylogo} alt="Companylogo"></img>
           </DrawerHeader>
           <Divider />
           <Typography variant="h6">WDLS Dashboard</Typography>
-          <Menubar />
+          <Menubar formData={formData} setFormData={setFormData} />
         </Drawer>
-        <Main open={open}>
+        <Main>
           <Route exact path="/home/InboundStaging" component={InboundStaging} />
-          <Route exact path="/home/InboundInbound1step" component={Inbound1step} />
+          <Route
+            exact
+            path="/home/InboundInbound1step"
+            component={Inbound1step}
+          />
         </Main>
       </Box>
     </React.Fragment>
