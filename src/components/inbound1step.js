@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 import Options from "../components/optionsButton";
 import { useDispatch, useSelector } from "react-redux";
 import { Tally, Location, Save } from "../actions/inbound1StepReceivingActions";
-import  Snackbar  from "../components/snackbar";
+import Snackbar from "../components/snackbar";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -48,7 +48,7 @@ export default function InboundStaging() {
   const [Qtyerror, setQtyerror] = useState(false);
   const [Loterror, setLoterror] = useState(false);
   const [Locerror, setLocerror] = useState(false);
-  const [ErrorMsg,  setErrorMSG] = useState(false);
+  const [ErrorMsg, setErrorMSG] = useState(false);
   const [values, setValues] = React.useState({
     name: "",
   });
@@ -56,8 +56,6 @@ export default function InboundStaging() {
   console.log(Locerror);
 
   const dispatch = useDispatch();
-
-
 
   const TypSubmit = (event) => {
     if (event.keyCode === 13) {
@@ -73,11 +71,9 @@ export default function InboundStaging() {
           InventoryType
         )
       ).then((resp) => {
-
         const [ArrayData] = resp || [];
 
         const { data } = ArrayData || {};
-
 
         const [
           username,
@@ -95,19 +91,19 @@ export default function InboundStaging() {
 
         const { value: errorValue } = errorMSG2 || "";
 
-        if (errorValue == "Tally Not Found.") {
+        if (errorValue === "Tally Not Found.") {
           setTallyerror((prevOpen) => !prevOpen);
         } else {
           setTallyerror(false);
         }
 
-        if (errorValue == "Item Not Valid.") {
+        if (errorValue === "Item Not Valid.") {
           setItemerror((prevOpen) => !prevOpen);
         } else {
           setItemerror(false);
         }
 
-        if (errorValue == "Quantity Not Valid.") {
+        if (errorValue === "Quantity Not Valid.") {
           setQtyerror((prevOpen) => !prevOpen);
         } else {
           setQtyerror(false);
@@ -158,7 +154,6 @@ export default function InboundStaging() {
 
         const { value: errorValue } = errorMSG2 || "";
 
-
         if (errorValue === "Lot Not Valid.") {
           setLoterror((prevOpen) => !prevOpen);
         } else {
@@ -187,8 +182,6 @@ export default function InboundStaging() {
 
       const { value: errorValue } = errorMSG2 || "";
 
-     
-
       if (errorValue === "Location Not Valid.") {
         setLocerror((prevOpen) => !prevOpen);
       } else {
@@ -210,9 +203,9 @@ export default function InboundStaging() {
           )
         ).then((resp) => {
           const [ArrayData] = resp;
-  
+
           const { data } = ArrayData || {};
-  
+
           const [
             username,
             tallyNumbers,
@@ -226,22 +219,18 @@ export default function InboundStaging() {
             errorMSG,
             errorMSG2,
           ] = data;
-  
+
           const { value: errorValue } = errorMSG2 || "";
 
-          console.log(errorValue)
-  
-  
+          console.log(errorValue);
+
           if (errorValue !== "Location Not Valid.") {
             setErrorMSG((prevOpen) => !prevOpen);
           } else {
             setErrorMSG(false);
           }
-  
         });
       }
-
-
     });
   };
 
@@ -249,7 +238,7 @@ export default function InboundStaging() {
     <Box sx={{ pt: "4em" }}>
       <Grid container>
         <Grid item md={5} sm={5} xs={1}></Grid>
-        <Grid item md={3} sm = {5} xs = {10}>
+        <Grid item md={3} sm={5} xs={10}>
           <Card>
             <CardHeader title="Inbound 1 - Step" className={classes.title} />
             <CardContent>
@@ -388,7 +377,7 @@ export default function InboundStaging() {
                 )}
               </div>
 
-              <Snackbar ErrorMsg = {ErrorMsg}></Snackbar>
+              <Snackbar ErrorMsg={ErrorMsg}></Snackbar>
 
               <CardActions className={classes.options}>
                 <Options />
@@ -397,7 +386,7 @@ export default function InboundStaging() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item md={4} sm = {2} xs={1}></Grid>
+        <Grid item md={4} sm={2} xs={1}></Grid>
       </Grid>
     </Box>
   );

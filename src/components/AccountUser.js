@@ -69,22 +69,12 @@ export default function CustomizedMenus() {
 
   const userLogin = useSelector((state) => state.accountInfo);
 
-  // const { loading, error, userInfo } = userLogin;
-
-  // const [DemoData] = userLogin.AccountData || [];
-
-  // const { E1USER, E1NAME, E1STOR, E1SSFX, E1BLDG, E1STAT } = DemoData || [];
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     dispatch(AccountSelection());
   };
-  const handleClose = () => {
-    // dispatch(AccountUpdation());
-    // document.location.href = "/home";
-    console.log("work");
-    setAnchorEl(null);
-  };
+ 
 
   const onTargetIdentityChange = (event) => {
     

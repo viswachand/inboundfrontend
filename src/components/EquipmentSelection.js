@@ -9,7 +9,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AccountSelection, AccountUpdation } from "../actions/AccountActions";
-import { USER_LOGIN_REQUEST } from "../constants/userConstants";
+
 
 const theme = createTheme();
 
@@ -64,23 +64,9 @@ export default function CustomizedMenus() {
 
   const dispatch = useDispatch();
 
-  const EquipmentData = useSelector((state) => state.Equipmentselection);
+  const EquipmentSelection = useSelector((state) => state.Equipmentselection);
 
-  const { loading, error, userInfo } = EquipmentData.EquipmentData;
-
-  console.log(EquipmentData.EquipmentData);
-
-  // const Arraydata = userLogin.AccountData ;
-
-  // var Arraydata = [];
-
-  // Arraydata.push(userLogin && userLogin.AccountData);
-
-  // console.log(Arraydata);
-
-  // const { E1USER, E1NAME, E1STOR, E1SSFX, E1BLDG, E1STAT } = DemoData || [];
-
-  // console.log(DemoData);
+  console.log( EquipmentSelection.EquipmentData);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -136,8 +122,8 @@ export default function CustomizedMenus() {
             onChange={onTargetIdentityChange}
             value={personName}
           >
-            {EquipmentData.EquipmentData?.length > 0
-              ? EquipmentData.EquipmentData.map((item, key) => (
+            { EquipmentSelection.EquipmentData?.length > 0
+              ?  EquipmentSelection.EquipmentData.map((item, key) => (
                   <MenuItem onClick={onTargetIdentityChange} disableRipple>{item.EQTYPE}</MenuItem>
                 ))
               : " "}
