@@ -18,7 +18,7 @@ export const menu = [
       {
         title: "Inbound Putaway",
         items: [],
-        to:"/home"
+        to:"/home/InboundPutaway"
       },
       {
         title: "Inbound 1-Step",

@@ -53,7 +53,7 @@ export default function InboundStaging() {
     name: "",
   });
 
-  console.log(Locerror);
+ 
 
   const dispatch = useDispatch();
 
@@ -73,7 +73,7 @@ export default function InboundStaging() {
       ).then((resp) => {
         const [ArrayData] = resp || [];
         const { data } = ArrayData || {};
-        console.log(data);
+
 
         const [
           username,
@@ -172,7 +172,7 @@ export default function InboundStaging() {
     }
   };
 
-  const TypLoc = (event) => {
+  const TypLoc = () => {
     dispatch(Location(tallyNumber, location)).then((resp) => {
       const [ArrayData] = resp;
 
@@ -222,9 +222,9 @@ export default function InboundStaging() {
 
           const { value: errorValue } = errorMSG2 || "";
 
-          console.log(errorValue);
+         
 
-          if (errorValue !== "Location Not Valid.") {
+          if (Locerror) {
             setErrorMSG((prevOpen) => !prevOpen);
           } else {
             setErrorMSG(false);

@@ -22,13 +22,8 @@ export default function CustomizedSnackbars({ErrorMsg}) {
     setOpen(false);
   };
 
-  console.log("snack" + ErrorMsg)
-
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-
-
-     
       <Snackbar open={ErrorMsg} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
           Data Saved Successfully!

@@ -27,7 +27,7 @@ const StyledMenu = styled((props) => (
 ))(({ theme }) => ({
   "& .MuiPaper-root": {
     borderRadius: 6,
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
     minWidth: "18rem",
     color:
       theme.palette.mode === "light"
@@ -39,11 +39,6 @@ const StyledMenu = styled((props) => (
       padding: "4px 0",
     },
     "& .MuiMenuItem-root": {
-      "& .MuiSvgIcon-root": {
-        fontSize: 18,
-        color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1.5),
-      },
       "&:active": {
         backgroundColor: alpha(
           theme.palette.primary.main,
@@ -61,7 +56,6 @@ export default function CustomizedMenus() {
 
   const open = Boolean(anchorEl);
 
-  var data;
 
   console.log(personName)
 

@@ -22,6 +22,7 @@ import { logout } from "../actions/userActions";
 import Popper from "@mui/core/Popper";
 import InboundStaging from "../components/InboundStaging";
 import Inbound1step from "../components/inbound1step";
+import InboundPutAway from "../components/inboundputaway";
 import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -265,6 +266,11 @@ export default function PersistentDrawerLeft() {
             exact
             path="/home/InboundInbound1step"
             component={Inbound1step}
+          />
+          <Route
+            exact
+            path="/home/InboundPutaway"
+            component={InboundPutAway}
           />
         </Main>
       </Box>

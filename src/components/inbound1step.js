@@ -53,7 +53,7 @@ export default function InboundStaging() {
     name: "",
   });
 
-  console.log(Locerror);
+
 
   const dispatch = useDispatch();
 
@@ -222,9 +222,9 @@ export default function InboundStaging() {
 
           const { value: errorValue } = errorMSG2 || "";
 
-          console.log(errorValue);
+   
 
-          if (errorValue !== "Location Not Valid.") {
+          if (Locerror) {
             setErrorMSG((prevOpen) => !prevOpen);
           } else {
             setErrorMSG(false);
@@ -368,7 +368,7 @@ export default function InboundStaging() {
                         helperText={Locerror ? "Location Not Valid" : ""}
                         label="Location:"
                         onChange={(e) => setLoc(e.target.value)}
-                        onKeyDown={() => TypLoc()}
+                        onClick={TypLoc}
                       />
                     </Grid>
                   </Grid>

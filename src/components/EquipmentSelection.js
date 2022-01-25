@@ -66,7 +66,7 @@ export default function CustomizedMenus() {
 
   const EquipmentSelection = useSelector((state) => state.Equipmentselection);
 
-  console.log( EquipmentSelection.EquipmentData);
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
