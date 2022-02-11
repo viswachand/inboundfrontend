@@ -1,6 +1,6 @@
 {
   "name": "sc-codeworks-inbound-dashboard",
-  "proxy": "http://170.249.89.98:5010",
+  "proxy": "http://170.249.89.98:5000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
